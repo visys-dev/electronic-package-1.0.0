@@ -1,0 +1,1148 @@
+{
+  "users": {
+    "group": "D2",
+    "description": "Облікові записи; ідентичність зберігається після деактивації.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "login",
+        "type": "Unicode text",
+        "required": "Так",
+        "rule": "1–100 кодових точок після trim",
+        "example": "Навчальне значення",
+        "pii": "Так",
+        "default": "Немає",
+        "purpose": "Нормалізований ідентифікатор входу"
+      },
+      {
+        "name": "display_name",
+        "type": "Unicode text",
+        "required": "Так",
+        "rule": "1–150 кодових точок після trim",
+        "example": "Навчальне значення",
+        "pii": "Так",
+        "default": "Немає",
+        "purpose": "Ім’я для відображення"
+      },
+      {
+        "name": "credential_hash",
+        "type": "opaque text",
+        "required": "Так",
+        "rule": "Хеш локального пароля; алгоритм і параметри визначаються в 2.3; ніколи не передається через API",
+        "example": "<синтетичний хеш>",
+        "pii": "Секрет",
+        "default": "Немає",
+        "purpose": "Перевірочний хеш пароля"
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "required": "Так",
+        "rule": "true / false",
+        "example": "true",
+        "pii": "Ні",
+        "default": "true",
+        "purpose": "Чинність запису для нових операцій"
+      },
+      {
+        "name": "version",
+        "type": "integer ≥ 1",
+        "required": "Так",
+        "rule": "Зростає при кожній зміні запису",
+        "example": "1",
+        "pii": "Ні",
+        "default": "1",
+        "purpose": "Версія запису для контролю конкурентних змін"
+      }
+    ]
+  },
+  "roles": {
+    "group": "D2",
+    "description": "Чотири глобальні ролі; незмінні коди.",
+    "fields": [
+      {
+        "name": "code",
+        "type": "enum",
+        "required": "Так",
+        "rule": "PK; requester, specialist, coordinator, administrator",
+        "example": "requester",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Сталий код глобальної ролі"
+      }
+    ]
+  },
+  "user_roles": {
+    "group": "D2",
+    "description": "Явне суміщення ролей; зняття ролі не видаляє рядок.",
+    "fields": [
+      {
+        "name": "user_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Обліковий запис учасника зв’язку"
+      },
+      {
+        "name": "role_code",
+        "type": "enum",
+        "required": "Так",
+        "rule": "FK → roles.code; разом з user_id складає PK",
+        "example": "requester",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Глобальна роль користувача"
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "required": "Так",
+        "rule": "true / false",
+        "example": "true",
+        "pii": "Ні",
+        "default": "true",
+        "purpose": "Чинність запису для нових операцій"
+      }
+    ]
+  },
+  "queues": {
+    "group": "D2",
+    "description": "Черги підтримки.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "name",
+        "type": "Unicode text",
+        "required": "Так",
+        "rule": "1–150 кодових точок після trim",
+        "example": "Навчальне значення",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Назва довідникового об’єкта"
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "required": "Так",
+        "rule": "true / false",
+        "example": "true",
+        "pii": "Ні",
+        "default": "true",
+        "purpose": "Чинність запису для нових операцій"
+      },
+      {
+        "name": "version",
+        "type": "integer ≥ 1",
+        "required": "Так",
+        "rule": "Зростає при кожній зміні запису",
+        "example": "1",
+        "pii": "Ні",
+        "default": "1",
+        "purpose": "Версія запису для контролю конкурентних змін"
+      }
+    ]
+  },
+  "queue_memberships": {
+    "group": "D2",
+    "description": "Членство спеціалістів і координаторів; має відповідати активній глобальній ролі.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "queue_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → queues.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Черга маршрутизації або членства"
+      },
+      {
+        "name": "user_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Обліковий запис учасника зв’язку"
+      },
+      {
+        "name": "member_role",
+        "type": "enum",
+        "required": "Так",
+        "rule": "specialist / coordinator; UNIQUE(queue_id,user_id,member_role)",
+        "example": "specialist",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Роль користувача в конкретній черзі"
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "required": "Так",
+        "rule": "true / false",
+        "example": "true",
+        "pii": "Ні",
+        "default": "true",
+        "purpose": "Чинність запису для нових операцій"
+      },
+      {
+        "name": "version",
+        "type": "integer ≥ 1",
+        "required": "Так",
+        "rule": "Зростає при кожній зміні запису",
+        "example": "1",
+        "pii": "Ні",
+        "default": "1",
+        "purpose": "Версія запису для контролю конкурентних змін"
+      }
+    ]
+  },
+  "categories": {
+    "group": "D2",
+    "description": "Маршрутизація нових заявок; зміни не переносять вже створені заявки.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "name",
+        "type": "Unicode text",
+        "required": "Так",
+        "rule": "1–150 кодових точок після trim",
+        "example": "Навчальне значення",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Назва довідникового об’єкта"
+      },
+      {
+        "name": "queue_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → queues.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Черга маршрутизації або членства"
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "required": "Так",
+        "rule": "true / false",
+        "example": "true",
+        "pii": "Ні",
+        "default": "true",
+        "purpose": "Чинність запису для нових операцій"
+      },
+      {
+        "name": "version",
+        "type": "integer ≥ 1",
+        "required": "Так",
+        "rule": "Зростає при кожній зміні запису",
+        "example": "1",
+        "pii": "Ні",
+        "default": "1",
+        "purpose": "Версія запису для контролю конкурентних змін"
+      }
+    ]
+  },
+  "sla_policies": {
+    "group": "D2",
+    "description": "Версії конфігурації цілей; нова редакція утворює новий рядок.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "category_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → categories.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Категорія звернення або налаштування"
+      },
+      {
+        "name": "priority",
+        "type": "enum",
+        "required": "Так",
+        "rule": "low, normal, high, critical",
+        "example": "normal",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Рівень пріоритету заявки або політики"
+      },
+      {
+        "name": "revision",
+        "type": "integer ≥ 1",
+        "required": "Так",
+        "rule": "UNIQUE(category_id,priority,revision)",
+        "example": "1",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Номер незмінної редакції політики"
+      },
+      {
+        "name": "response_target_ms",
+        "type": "integer > 0",
+        "required": "Так",
+        "rule": "Ціль першої відповіді, мілісекунди",
+        "example": "1800000",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Цільова тривалість першої відповіді"
+      },
+      {
+        "name": "resolution_target_ms",
+        "type": "integer > 0",
+        "required": "Так",
+        "rule": "Ціль вирішення, мілісекунди",
+        "example": "7200000",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Цільова тривалість вирішення"
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "required": "Так",
+        "rule": "true / false",
+        "example": "true",
+        "pii": "Ні",
+        "default": "true",
+        "purpose": "Чинність запису для нових операцій"
+      }
+    ]
+  },
+  "tickets": {
+    "group": "D1",
+    "description": "Поточний стан агрегату заявки та незалежний від довідників знімок цілей.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "number",
+        "type": "integer ≥ 1",
+        "required": "Так",
+        "rule": "UNIQUE; незмінний номер; пропуски в нумерації допустимі",
+        "example": "1",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Унікальний номер заявки для користувача"
+      },
+      {
+        "name": "requester_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Власник і автор заявки"
+      },
+      {
+        "name": "category_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → categories.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Категорія звернення або налаштування"
+      },
+      {
+        "name": "queue_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → queues.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Черга маршрутизації або членства"
+      },
+      {
+        "name": "assignee_id",
+        "type": "UUID",
+        "required": "Ні",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Поточний виконавець заявки"
+      },
+      {
+        "name": "previous_ticket_id",
+        "type": "UUID",
+        "required": "Ні",
+        "rule": "FK → tickets.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Попередня власна закрита заявка"
+      },
+      {
+        "name": "title",
+        "type": "Unicode text",
+        "required": "Так",
+        "rule": "1–150 кодових точок після trim",
+        "example": "Навчальне значення",
+        "pii": "Можливі",
+        "default": "Немає",
+        "purpose": "Коротка тема заявки"
+      },
+      {
+        "name": "description",
+        "type": "Unicode text",
+        "required": "Так",
+        "rule": "1–4000 кодових точок після trim",
+        "example": "Навчальне значення",
+        "pii": "Можливі",
+        "default": "Немає",
+        "purpose": "Повний опис проблеми"
+      },
+      {
+        "name": "priority",
+        "type": "enum",
+        "required": "Так",
+        "rule": "low, normal, high, critical",
+        "example": "normal",
+        "pii": "Ні",
+        "default": "normal",
+        "purpose": "Рівень пріоритету заявки або політики"
+      },
+      {
+        "name": "state",
+        "type": "enum",
+        "required": "Так",
+        "rule": "new, assigned, in_progress, waiting_requester, resolved, closed",
+        "example": "new",
+        "pii": "Ні",
+        "default": "new",
+        "purpose": "Стан заявки або інтервалу"
+      },
+      {
+        "name": "policy_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → sla_policies.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Застосована редакція політики строків"
+      },
+      {
+        "name": "response_target_ms",
+        "type": "integer > 0",
+        "required": "Так",
+        "rule": "Знімок цілі; змінюється тільки за BR-01",
+        "example": "1800000",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Цільова тривалість першої відповіді"
+      },
+      {
+        "name": "resolution_target_ms",
+        "type": "integer > 0",
+        "required": "Так",
+        "rule": "Знімок цілі; змінюється тільки за BR-01",
+        "example": "7200000",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Цільова тривалість вирішення"
+      },
+      {
+        "name": "created_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент створення запису"
+      },
+      {
+        "name": "updated_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент останньої зміни агрегату"
+      },
+      {
+        "name": "first_assigned_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Ні",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент першого призначення; блокує подальшу зміну пріоритету"
+      },
+      {
+        "name": "first_response_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Ні",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент першої публічної відповіді підтримки"
+      },
+      {
+        "name": "solution_comment_id",
+        "type": "UUID",
+        "required": "Ні",
+        "rule": "FK → comments.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Повідомлення з поточним запропонованим рішенням"
+      },
+      {
+        "name": "response_breached",
+        "type": "boolean",
+        "required": "Так",
+        "rule": "true / false",
+        "example": "false",
+        "pii": "Ні",
+        "default": "false",
+        "purpose": "Збережена ознака перевищення цілі першої відповіді"
+      },
+      {
+        "name": "resolution_breached",
+        "type": "boolean",
+        "required": "Так",
+        "rule": "true / false",
+        "example": "false",
+        "pii": "Ні",
+        "default": "false",
+        "purpose": "Збережена ознака хоча б одного перевищення цілі вирішення"
+      },
+      {
+        "name": "version",
+        "type": "integer ≥ 1",
+        "required": "Так",
+        "rule": "Зростає при кожній зміні запису",
+        "example": "1",
+        "pii": "Ні",
+        "default": "1",
+        "purpose": "Версія запису для контролю конкурентних змін"
+      }
+    ]
+  },
+  "comments": {
+    "group": "D3",
+    "description": "Незмінні повідомлення; рішення й запит уточнення також є повідомленнями.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "ticket_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → tickets.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Заявка, якій належить запис"
+      },
+      {
+        "name": "author_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Автор повідомлення"
+      },
+      {
+        "name": "author_role",
+        "type": "enum",
+        "required": "Так",
+        "rule": "Роль виконання на момент запису; requester / specialist / coordinator",
+        "example": "specialist",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Роль автора під час створення повідомлення"
+      },
+      {
+        "name": "visibility",
+        "type": "enum",
+        "required": "Так",
+        "rule": "public / internal; requester → тільки public",
+        "example": "public",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Дозволена аудиторія повідомлення або події"
+      },
+      {
+        "name": "kind",
+        "type": "enum",
+        "required": "Так",
+        "rule": "comment / clarification / solution / rejection / resume_reason",
+        "example": "comment",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Призначення повідомлення у сценарії"
+      },
+      {
+        "name": "body",
+        "type": "Unicode text",
+        "required": "Так",
+        "rule": "1–2000 кодових точок після trim",
+        "example": "Навчальне значення",
+        "pii": "Можливі",
+        "default": "Немає",
+        "purpose": "Текст повідомлення"
+      },
+      {
+        "name": "created_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент створення запису"
+      }
+    ]
+  },
+  "history_events": {
+    "group": "D4",
+    "description": "Незмінна бізнес-історія; private-події не потрапляють у відповідь заявнику.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "ticket_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → tickets.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Заявка, якій належить запис"
+      },
+      {
+        "name": "actor_id",
+        "type": "UUID",
+        "required": "Ні",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Користувач, який виконав зміну; null для системної події"
+      },
+      {
+        "name": "event_type",
+        "type": "enum",
+        "required": "Так",
+        "rule": "created / assigned / reassigned / priority_changed / state_changed / comment_added / response_breached / resolution_breached",
+        "example": "created",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Вид зафіксованої події"
+      },
+      {
+        "name": "visibility",
+        "type": "enum",
+        "required": "Так",
+        "rule": "public / internal; для нотатки та пов’язаних змін — internal",
+        "example": "public",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Дозволена аудиторія повідомлення або події"
+      },
+      {
+        "name": "changes",
+        "type": "JSON object",
+        "required": "Так",
+        "rule": "Лише дозволені ідентифікатори/значення до й після; без тіл повідомлень і секретів",
+        "example": "{\"state\":{\"old\":null,\"new\":\"new\"}}",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Зафіксовані попередні та нові значення"
+      },
+      {
+        "name": "occurred_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Серверний момент бізнес-події"
+      }
+    ]
+  },
+  "ticket_intervals": {
+    "group": "D1",
+    "description": "Послідовні інтервали станів; джерело розрахунку часу вирішення.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "ticket_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → tickets.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Заявка, якій належить запис"
+      },
+      {
+        "name": "state",
+        "type": "enum",
+        "required": "Так",
+        "rule": "new, assigned, in_progress, waiting_requester, resolved, closed",
+        "example": "in_progress",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Стан заявки або інтервалу"
+      },
+      {
+        "name": "started_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Початок інтервалу стану"
+      },
+      {
+        "name": "ended_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Ні",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Кінець інтервалу стану"
+      }
+    ]
+  },
+  "outbox_events": {
+    "group": "D6",
+    "description": "Відкладені події; тільки повний проєкт.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "ticket_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → tickets.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Заявка, якій належить запис"
+      },
+      {
+        "name": "event_key",
+        "type": "text",
+        "required": "Так",
+        "rule": "UNIQUE; звичайна подія: history UUID; порушення: ticket UUID + metric",
+        "example": "breach:<ticket>:response",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Сталий ключ бізнес-події"
+      },
+      {
+        "name": "event_type",
+        "type": "enum",
+        "required": "Так",
+        "rule": "created / assigned / public_support / requester_reply / reopened / response_breached / resolution_breached",
+        "example": "created",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Вид зафіксованої події"
+      },
+      {
+        "name": "payload",
+        "type": "JSON object",
+        "required": "Так",
+        "rule": "Лише ID події/адресатів; без текстів звернень, паролів і токенів",
+        "example": "{\"recipientIds\":[]}",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Ідентифікатори й адресати відкладеної події"
+      },
+      {
+        "name": "occurred_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Серверний момент бізнес-події"
+      },
+      {
+        "name": "processed_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Ні",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент завершення оброблення події"
+      }
+    ]
+  },
+  "notifications": {
+    "group": "D5",
+    "description": "Внутрішні сповіщення; перевірка актуального доступу при читанні.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "event_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → outbox_events.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Відкладена подія, що породила сповіщення"
+      },
+      {
+        "name": "recipient_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Адресат внутрішнього сповіщення"
+      },
+      {
+        "name": "dedup_key",
+        "type": "text",
+        "required": "Так",
+        "rule": "UNIQUE; event_key + recipient_id; порушення: ticket + metric + recipient",
+        "example": "breach:<ticket>:response:<user>",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Ключ усунення повторного сповіщення"
+      },
+      {
+        "name": "created_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент створення запису"
+      },
+      {
+        "name": "read_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Ні",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент першого прочитання сповіщення"
+      }
+    ]
+  },
+  "idempotency_keys": {
+    "group": "D1",
+    "description": "Повтори створення; ключ зберігається не менше строку існування заявки.",
+    "fields": [
+      {
+        "name": "user_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Обліковий запис учасника зв’язку"
+      },
+      {
+        "name": "operation_key",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "Разом з user_id складає PK; заголовок Idempotency-Key",
+        "example": "00000000-0000-4000-8000-000000000099",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Ключ повторюваної операції створення"
+      },
+      {
+        "name": "request_digest",
+        "type": "text",
+        "required": "Так",
+        "rule": "SHA-256 канонічного нормалізованого CreateTicketRequest, включно з відсутніми optional як null",
+        "example": "<sha256>",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Відбиток нормалізованої команди створення"
+      },
+      {
+        "name": "ticket_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → tickets.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Заявка, якій належить запис"
+      },
+      {
+        "name": "created_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент створення запису"
+      }
+    ]
+  },
+  "admin_events": {
+    "group": "D2",
+    "description": "Аудит конфігурації, окремо від бізнес-історії заявки.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "actor_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Користувач, який виконав зміну; null для системної події"
+      },
+      {
+        "name": "resource_type",
+        "type": "enum",
+        "required": "Так",
+        "rule": "user / queue / membership / category / policy",
+        "example": "queue",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Вид конфігураційного об’єкта"
+      },
+      {
+        "name": "resource_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "ID зміненого адміністративного ресурсу; логічне посилання, не поліморфний FK",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Ідентифікатор зміненого конфігураційного об’єкта"
+      },
+      {
+        "name": "changes",
+        "type": "JSON object",
+        "required": "Так",
+        "rule": "Дозволені зміни; без credential_hash та без тіл заявок",
+        "example": "{\"active\":{\"old\":true,\"new\":false}}",
+        "pii": "Можливі",
+        "default": "Немає",
+        "purpose": "Зафіксовані попередні та нові значення"
+      },
+      {
+        "name": "occurred_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Серверний момент бізнес-події"
+      }
+    ]
+  },
+  "sessions": {
+    "group": "D2",
+    "description": "Серверні сеанси локального навчального входу; секрети відсутні у відкритому вигляді.",
+    "fields": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "PK; UUID сервера",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Первинний ідентифікатор запису"
+      },
+      {
+        "name": "user_id",
+        "type": "UUID",
+        "required": "Так",
+        "rule": "FK → users.id; фізичне видалення заборонене",
+        "example": "00000000-0000-4000-8000-000000000001",
+        "pii": "Непрямі",
+        "default": "Немає",
+        "purpose": "Обліковий запис учасника зв’язку"
+      },
+      {
+        "name": "token_digest",
+        "type": "text",
+        "required": "Так",
+        "rule": "UNIQUE; хеш випадкового токена cookie",
+        "example": "<digest>",
+        "pii": "Секрет",
+        "default": "Немає",
+        "purpose": "Перевірочний хеш токена сеансу"
+      },
+      {
+        "name": "csrf_digest",
+        "type": "text",
+        "required": "Так",
+        "rule": "Хеш CSRF-токена сеансу; перевірка змінювальних запитів",
+        "example": "<digest>",
+        "pii": "Секрет",
+        "default": "Немає",
+        "purpose": "Перевірочний хеш CSRF-токена"
+      },
+      {
+        "name": "created_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент створення запису"
+      },
+      {
+        "name": "expires_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Так",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Межа чинності сеансу"
+      },
+      {
+        "name": "revoked_at",
+        "type": "UTC timestamp, точність 1 ms",
+        "required": "Ні",
+        "rule": "У JSON RFC 3339, суфікс Z",
+        "example": "2026-10-25T10:00:00.000Z",
+        "pii": "Ні",
+        "default": "Немає",
+        "purpose": "Момент примусового відкликання сеансу"
+      }
+    ]
+  }
+}

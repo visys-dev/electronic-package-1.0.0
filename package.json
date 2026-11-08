@@ -1,0 +1,338 @@
+{
+  "name": "coursework-support-electronic-package",
+  "version": "1.0.0",
+  "assembled": "2026-11-08",
+  "prototypeVersion": "0.1.0",
+  "reportScope": "appendices-only",
+  "diagramMcpBuild": "639186a@2026-11-07T15:29:07.080Z",
+  "exports": [
+    {
+      "source": "docs/models/uml-sequence-errors.drawio",
+      "pages": [
+        "uml-sequence-errors"
+      ],
+      "png": "docs/models/uml-sequence-errors.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "uml-sequence-errors": "docs/models/uml-sequence-errors.png"
+      }
+    },
+    {
+      "source": "docs/models/dfd-level1-data.drawio",
+      "pages": [
+        "dfd-level1-data"
+      ],
+      "png": "docs/models/dfd-level1-data.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "dfd-level1-data": "docs/models/dfd-level1-data.png"
+      }
+    },
+    {
+      "source": "docs/models/uml-state.drawio",
+      "pages": [
+        "uml-state"
+      ],
+      "png": "docs/models/uml-state.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "uml-state": "docs/models/uml-state.png"
+      }
+    },
+    {
+      "source": "docs/models/uml-usecase-specific.drawio",
+      "pages": [
+        "uml-usecase-specific"
+      ],
+      "png": "docs/models/uml-usecase-specific.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "uml-usecase-specific": "docs/models/uml-usecase-specific.png"
+      }
+    },
+    {
+      "source": "docs/models/architecture.drawio",
+      "pages": [
+        "architecture"
+      ],
+      "png": "docs/models/architecture.png",
+      "embedded_graph_matches": true,
+      "comparison_note": "Equivalent default zero coordinates; -7.0 and -7 are equal.",
+      "pageViews": {
+        "architecture": "docs/models/architecture.png"
+      }
+    },
+    {
+      "source": "docs/models/dfd-level1-interfaces.drawio",
+      "pages": [
+        "dfd-level1-interfaces"
+      ],
+      "png": "docs/models/dfd-level1-interfaces.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "dfd-level1-interfaces": "docs/models/dfd-level1-interfaces.png"
+      }
+    },
+    {
+      "source": "docs/models/dfd-level2-interfaces.drawio",
+      "pages": [
+        "dfd-level2-interfaces"
+      ],
+      "png": "docs/models/dfd-level2-interfaces.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "dfd-level2-interfaces": "docs/models/dfd-level2-interfaces.png"
+      }
+    },
+    {
+      "source": "docs/models/uml-usecase-common.drawio",
+      "pages": [
+        "uml-usecase-common"
+      ],
+      "png": "docs/models/uml-usecase-common.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "uml-usecase-common": "docs/models/uml-usecase-common.png"
+      }
+    },
+    {
+      "source": "docs/models/context-dfd.drawio",
+      "pages": [
+        "context-dfd"
+      ],
+      "png": "docs/models/context-dfd.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "context-dfd": "docs/models/context-dfd.png"
+      }
+    },
+    {
+      "source": "docs/models/uml-sequence-main.drawio",
+      "pages": [
+        "uml-sequence-main"
+      ],
+      "png": "docs/models/uml-sequence-main.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "uml-sequence-main": "docs/models/uml-sequence-main.png"
+      }
+    },
+    {
+      "source": "docs/models/dfd-level0-interfaces.drawio",
+      "pages": [
+        "dfd-level0-interfaces"
+      ],
+      "png": "docs/models/dfd-level0-interfaces.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "dfd-level0-interfaces": "docs/models/dfd-level0-interfaces.png"
+      }
+    },
+    {
+      "source": "docs/models/dfd-level0-data.drawio",
+      "pages": [
+        "dfd-level0-data"
+      ],
+      "png": "docs/models/dfd-level0-data.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "dfd-level0-data": "docs/models/dfd-level0-data.png"
+      }
+    },
+    {
+      "source": "docs/models/dfd-level2-data.drawio",
+      "pages": [
+        "dfd-level2-data"
+      ],
+      "png": "docs/models/dfd-level2-data.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "dfd-level2-data": "docs/models/dfd-level2-data.png"
+      }
+    },
+    {
+      "source": "data/erd.drawio",
+      "pages": [
+        "erd-access",
+        "erd-tickets",
+        "erd-events"
+      ],
+      "png": "data/erd.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "erd-access": "data/erd.png",
+        "erd-tickets": "data/erd-tickets.png",
+        "erd-events": "data/erd-events.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-02.drawio",
+      "pages": [
+        "UI-02"
+      ],
+      "png": "ux/mockups/ui-02.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-02": "ux/mockups/ui-02.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-04.drawio",
+      "pages": [
+        "UI-04"
+      ],
+      "png": "ux/mockups/ui-04.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-04": "ux/mockups/ui-04.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-12.drawio",
+      "pages": [
+        "UI-12"
+      ],
+      "png": "ux/mockups/ui-12.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-12": "ux/mockups/ui-12.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-06.drawio",
+      "pages": [
+        "UI-06"
+      ],
+      "png": "ux/mockups/ui-06.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-06": "ux/mockups/ui-06.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-10.drawio",
+      "pages": [
+        "UI-10"
+      ],
+      "png": "ux/mockups/ui-10.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-10": "ux/mockups/ui-10.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-09.drawio",
+      "pages": [
+        "UI-09"
+      ],
+      "png": "ux/mockups/ui-09.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-09": "ux/mockups/ui-09.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-07.drawio",
+      "pages": [
+        "UI-07"
+      ],
+      "png": "ux/mockups/ui-07.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-07": "ux/mockups/ui-07.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-01.drawio",
+      "pages": [
+        "UI-01"
+      ],
+      "png": "ux/mockups/ui-01.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-01": "ux/mockups/ui-01.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-08.drawio",
+      "pages": [
+        "UI-08"
+      ],
+      "png": "ux/mockups/ui-08.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-08": "ux/mockups/ui-08.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-11.drawio",
+      "pages": [
+        "UI-11"
+      ],
+      "png": "ux/mockups/ui-11.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-11": "ux/mockups/ui-11.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-05.drawio",
+      "pages": [
+        "UI-05"
+      ],
+      "png": "ux/mockups/ui-05.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-05": "ux/mockups/ui-05.png"
+      }
+    },
+    {
+      "source": "ux/mockups/ui-03.drawio",
+      "pages": [
+        "UI-03"
+      ],
+      "png": "ux/mockups/ui-03.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "UI-03": "ux/mockups/ui-03.png"
+      }
+    },
+    {
+      "source": "ux/flows/confirm-solution.drawio",
+      "pages": [
+        "FLOW-03"
+      ],
+      "png": "ux/flows/confirm-solution.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "FLOW-03": "ux/flows/confirm-solution.png"
+      }
+    },
+    {
+      "source": "ux/flows/process-ticket.drawio",
+      "pages": [
+        "FLOW-02"
+      ],
+      "png": "ux/flows/process-ticket.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "FLOW-02": "ux/flows/process-ticket.png"
+      }
+    },
+    {
+      "source": "ux/flows/create-ticket.drawio",
+      "pages": [
+        "FLOW-01"
+      ],
+      "png": "ux/flows/create-ticket.png",
+      "embedded_graph_matches": true,
+      "pageViews": {
+        "FLOW-01": "ux/flows/create-ticket.png"
+      }
+    }
+  ],
+  "status": "assembled-and-verified",
+  "pendingGraphicExports": [],
+  "graphicPages": 31,
+  "revision": "2026-11-08-compose-isolation"
+}

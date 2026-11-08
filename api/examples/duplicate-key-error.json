@@ -1,0 +1,6 @@
+{
+  "code": "IDEMPOTENCY_CONFLICT",
+  "message": "Ключ операції вже використано з іншим вмістом.",
+  "correlationId": "00000000-0000-4000-8000-000000008004",
+  "fieldErrors": []
+}

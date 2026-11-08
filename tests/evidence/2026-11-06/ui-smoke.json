@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "flows": [
+    "FLOW-01",
+    "FLOW-02",
+    "FLOW-03"
+  ],
+  "ticketNumber": 40,
+  "browser": "Chromium headless",
+  "certificateMode": "SPKI allowlist for disposable test only",
+  "caAndHostnameValidatedBeforeBrowser": true,
+  "javascriptErrors": 0,
+  "fieldErrorAssociationAndDraftPreservation": "passed for blank title",
+  "keyboardAccessibilityChecked": false,
+  "imageId": "sha256:da260eff87e50590ee24c2e6a2acc9ce80d3c68974affea0b443c2e30c29e53e",
+  "unicode64PasswordInputWithoutTruncation": "passed; authentication length rules covered separately by unit tests"
+}

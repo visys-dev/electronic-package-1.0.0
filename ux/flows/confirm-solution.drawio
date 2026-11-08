@@ -1,0 +1,89 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="FLOW-03" name="FLOW-03 Перевірка рішення">
+    <mxGraphModel adaptiveColors="auto" page="1" pageWidth="840" pageHeight="800">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;strokeColor=none;fontStyle=1;" value="FLOW-03 — Перевірка рішення" vertex="1">
+          <mxGeometry height="40" width="760" x="20" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="n0" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;rounded=1;" value="Власник: картка" vertex="1">
+          <mxGeometry height="70" width="220" x="30" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;rounded=1;" value="Прочитати рішення" vertex="1">
+          <mxGeometry height="70" width="220" x="290" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="n0" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;endArrow=classic;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="n1" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n2" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;rounded=1;" value="Підтвердити рішення" vertex="1">
+          <mxGeometry height="70" width="220" x="550" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="n1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;endArrow=classic;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="n2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n3" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;rounded=1;" value="Перевірити «Закрита»" vertex="1">
+          <mxGeometry height="70" width="220" x="550" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="n2" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;endArrow=classic;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="n3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="error" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;fillColor=#f5f5f5;" value="Рішення змінилося" vertex="1">
+          <mxGeometry height="70" width="220" x="30" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="recover" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;" value="Перечитати рішення" vertex="1">
+          <mxGeometry height="70" width="220" x="290" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="err" edge="1" parent="1" source="n2" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;endArrow=classic;labelBackgroundColor=#ffffff;labelPlacement=auto;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;entryX=0.5;entryY=0;" target="error" value="Відмова">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="530" y="149" />
+              <mxPoint x="530" y="295" />
+              <mxPoint x="140" y="295" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fix" edge="1" parent="1" source="error" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;endArrow=classic;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="recover" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="alt" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;fillColor=#f5f5f5;" value="Відхилити з поясненням" vertex="1">
+          <mxGeometry height="70" width="220" x="30" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="altend" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;" value="Повернення «У роботі»" vertex="1">
+          <mxGeometry height="70" width="220" x="290" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="altedge" edge="1" parent="1" source="alt" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;endArrow=classic;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="altend" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="reject" edge="1" parent="1" source="n1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;endArrow=classic;labelBackgroundColor=#ffffff;labelPlacement=auto;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;entryX=0.5;entryY=0;" target="alt" value="Не прийнято">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="149" />
+              <mxPoint x="270" y="525" />
+              <mxPoint x="140" y="525" />
+            </Array>
+            <mxPoint as="offset" x="42.0" y="-9.6" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="changed" edge="1" parent="1" source="recover" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;endArrow=classic;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="n1" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#111111;strokeColor=#333333;fillColor=#ffffff;strokeColor=none;" value="Повернення — Проєктування. Закриття — Прототип." vertex="1">
+          <mxGeometry height="50" width="760" x="20" y="690" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

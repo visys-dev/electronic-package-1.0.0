@@ -1,0 +1,64 @@
+name: coursework-support
+services:
+  db:
+    image: postgres:17-bookworm@sha256:665dc7b37ac52a17e298511414c21d23ffa4e6a6ef6225b3e5d59c7afb35e994
+    environment:
+      POSTGRES_DB: ${DB_NAME:?Run scripts/init_local.py}
+      POSTGRES_USER: coursework_owner
+      POSTGRES_PASSWORD: ${DB_OWNER_PASSWORD:?Missing owner password}
+      APP_DB_PASSWORD: ${DB_PASSWORD:?Missing app password}
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./docker/init-user.sh:/docker-entrypoint-initdb.d/10-app-user.sh:ro
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U coursework_owner -d "$${POSTGRES_DB}"']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    logging:
+      driver: local
+      options: {max-size: 5m, max-file: '2'}
+  migrate:
+    build: .
+    image: coursework-support-app:local
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: coursework_owner
+      DB_PASSWORD: ${DB_OWNER_PASSWORD}
+      DEMO_REQUESTER_PASSWORD: ${DEMO_REQUESTER_PASSWORD:?Missing demo password}
+      DEMO_SPECIALIST_PASSWORD: ${DEMO_SPECIALIST_PASSWORD:?Missing demo password}
+      DEMO_COORDINATOR_PASSWORD: ${DEMO_COORDINATOR_PASSWORD:?Missing demo password}
+      DEMO_ADMIN_PASSWORD: ${DEMO_ADMIN_PASSWORD:?Missing demo password}
+      DEMO_OTHER_PASSWORD: ${DEMO_OTHER_PASSWORD:?Missing demo password}
+    command: [sh, -c, 'alembic upgrade head && python -m app.seed && python -m app.grants']
+    depends_on:
+      db: {condition: service_healthy}
+  app:
+    build: .
+    image: coursework-support-app:local
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: coursework_app
+      DB_PASSWORD: ${DB_PASSWORD}
+      APP_ORIGIN: ${APP_ORIGIN}
+    ports: ['127.0.0.1:${APP_PORT:-8443}:8443']
+    volumes:
+      - ./.local/tls:/tls:ro
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    healthcheck:
+      test: [CMD, python, -c, "import ssl,urllib.request; urllib.request.urlopen('https://localhost:8443/health',context=ssl.create_default_context(cafile='/tls/ca.crt'),timeout=3)"]
+      interval: 5s
+      timeout: 4s
+      retries: 10
+    logging:
+      driver: local
+      options: {max-size: 5m, max-file: '2'}
+volumes:
+  database:

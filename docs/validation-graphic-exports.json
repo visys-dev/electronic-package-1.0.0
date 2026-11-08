@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-08",
+  "authorization": "Користувач дозволив створення експортів лише в окремій папці пакета.",
+  "renderer": "Official Drawio viewer and shapes, local Chromium; all page network requests blocked.",
+  "sandbox": "Chromium OS sandbox unavailable; disposable local context, no external navigation, requests blocked.",
+  "fontFiles": "Times New Roman, temporary use only; not distributed in package.",
+  "rendererAssetSha256": {
+    "Times.TTF": "4e98adeff8ccc8ef4e3ece8d4547e288ff85fdc9c7ca711a4599c234874bbe86",
+    "Timesbi.TTF": "192e1b0d18e90334e999a99f8c32808d6a2e74b3698b8cd90c943c2249a46549",
+    "Timesi.TTF": "c25ae529b4cecdbca148b6ccb862ee0abad770af8b1fd29c8dba619d1b8da78a",
+    "shapes.min.js": "565463296aa15df2abea2404d7defae5db74b3d23c9b3c75fe743a7af089f3a9",
+    "Timesbd.TTF": "4357b63cef20c01661a53c5dae70ffd20cb4765503aaed6d38b17a57c5a90bff",
+    "viewer-static.min.js": "35b8ef54369e938ad2399d3c8ce3945591d4b200a01f6942d0e39743bea1f1a1"
+  },
+  "exports": [
+    {
+      "source": "docs/models/context-dfd.drawio",
+      "page": "context-dfd",
+      "output": "docs/models/context-dfd.png",
+      "cssDimensions": {
+        "width": 948,
+        "height": 638,
+        "fontLoaded": true,
+        "cells": 18
+      },
+      "pixelScale": 2,
+      "sourceGraphSha256": "15c31655e58f7ac8555b7881cafed603591fc9497ff04eca69f58c2928c55ac9",
+      "pngSha256": "99f8acc369abf77d8e9fb65b0a73c8fd6a1dcc8c142f32b70b05557e63552b04",
+      "font": "Times New Roman",
+      "javascriptErrors": [],
+      "embeddedXmlMatches": true,
+      "visuallyReviewed": true
+    },
+    {
+      "source": "docs/models/dfd-level0-interfaces.drawio",
+      "page": "dfd-level0-interfaces",
+      "output": "docs/models/dfd-level0-interfaces.png",
+      "cssDimensions": {
+        "width": 1189,
+        "height": 823,
+        "fontLoaded": true,
+        "cells": 36
+      },
+      "pixelScale": 2,
+      "sourceGraphSha256": "3ccdad14d62101626a9feca952eee4260e7317a4926bf4b048c7c9447c3214c3",
+      "pngSha256": "4e0fad42cd84ffb3bd603fa35fbd98b2eae5c0801948a2a4fdec2735b1734bbc",
+      "font": "Times New Roman",
+      "javascriptErrors": [],
+      "embeddedXmlMatches": true,
+      "visuallyReviewed": true
+    },
+    {
+      "source": "docs/models/uml-state.drawio",
+      "page": "uml-state",
+      "output": "docs/models/uml-state.png",
+      "cssDimensions": {
+        "width": 1248,
+        "height": 743,
+        "fontLoaded": true,
+        "cells": 20
+      },
+      "pixelScale": 2,
+      "sourceGraphSha256": "f1908dd75ca13403f0df4b44d95301a6845439a57164e76bca6f17ee1e004538",
+      "pngSha256": "b22f58f4f697b278a235e4d6bb07c65e32afe81aa2463ee2ee5376095b768f17",
+      "font": "Times New Roman",
+      "javascriptErrors": [],
+      "embeddedXmlMatches": true,
+      "visuallyReviewed": true
+    },
+    {
+      "source": "data/erd.drawio",
+      "page": "erd-tickets",
+      "output": "data/erd-tickets.png",
+      "cssDimensions": {
+        "width": 1168,
+        "height": 1038,
+        "fontLoaded": true,
+        "cells": 82
+      },
+      "pixelScale": 2,
+      "sourceGraphSha256": "53bfc575b28e5d777832cdf820d97e74d38a8aeedd1a0975519414dba8e157ec",
+      "pngSha256": "ebc84111f9a0ccd6d1a9569ccbf7ee8672781bb911ca29646b2276555fab9f0a",
+      "font": "Times New Roman",
+      "javascriptErrors": [],
+      "embeddedXmlMatches": true,
+      "visuallyReviewed": true
+    },
+    {
+      "source": "data/erd.drawio",
+      "page": "erd-events",
+      "output": "data/erd-events.png",
+      "cssDimensions": {
+        "width": 1168,
+        "height": 718,
+        "fontLoaded": true,
+        "cells": 51
+      },
+      "pixelScale": 2,
+      "sourceGraphSha256": "9ff5e28c6152531e2f346605325088b085c80dde6cd6dbb33aa7fdccc30ee323",
+      "pngSha256": "f013d72fc156346a7e14916b33a0a8f00ad2b7dd3c8df33f60f4f0c667343b49",
+      "font": "Times New Roman",
+      "javascriptErrors": [],
+      "embeddedXmlMatches": true,
+      "visuallyReviewed": true
+    }
+  ],
+  "scope": "PNG export and visual review; no diagram edits or application tests."
+}

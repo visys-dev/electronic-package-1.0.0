@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device" compressed="false" agent="Drawio MCP; local Drawio export 32.6.1">
+  <diagram id="uml-usecase-common" name="UML-UC-01 · Спільні цілі">
+    <mxGraphModel dx="1776" dy="1286" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;text;strokeColor=none;fillColor=none;fontStyle=1;align=center;fontFamily=Times New Roman;fontSize=14;" value="UML-UC-01 · Спільні цілі учасників" vertex="1">
+          <mxGeometry height="40" width="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="system" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;swimlane;startSize=35;collapsible=0;pointerEvents=0;fillColor=#f7f7f7;swimlaneFillColor=#ffffff;fontFamily=Times New Roman;fontSize=14;" value="Система управління заявками" vertex="1">
+          <mxGeometry height="620" width="360" x="650" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-02" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-02&lt;br&gt;Переглянути / знайти&lt;br&gt;доступні заявки" vertex="1">
+          <mxGeometry height="75" width="230" x="65" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-05" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-05&lt;br&gt;Додати дозволене&lt;br&gt;повідомлення" vertex="1">
+          <mxGeometry height="75" width="230" x="65" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-06" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-06&lt;br&gt;Переглянути&lt;br&gt;історію" vertex="1">
+          <mxGeometry height="75" width="230" x="65" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-08" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-08&lt;br&gt;Переглянути власні&lt;br&gt;сповіщення" vertex="1">
+          <mxGeometry height="75" width="230" x="65" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="E1" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;labelPerimeter=1;fontFamily=Times New Roman;fontSize=14;" value="Заявник" vertex="1">
+          <mxGeometry height="75" width="50" x="50" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="E2" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;labelPerimeter=1;fontFamily=Times New Roman;fontSize=14;" value="Спеціаліст" vertex="1">
+          <mxGeometry height="75" width="50" x="50" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="E3" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;labelPerimeter=1;fontFamily=Times New Roman;fontSize=14;" value="Координатор" vertex="1">
+          <mxGeometry height="75" width="50" x="50" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="common" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;labelPerimeter=1;fontFamily=Times New Roman;fontSize=14;" value="Учасник опрацювання&lt;br&gt;{abstract}" vertex="1">
+          <mxGeometry height="80" width="60" x="390" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="E1-is-common" edge="1" parent="1" source="E1" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;edgeStyle=none;endArrow=block;endFill=0;endSize=16;fontFamily=Times New Roman;fontSize=14;" target="common" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E2-is-common" edge="1" parent="1" source="E2" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;edgeStyle=none;endArrow=block;endFill=0;endSize=16;fontFamily=Times New Roman;fontSize=14;" target="common" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E3-is-common" edge="1" parent="1" source="E3" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;edgeStyle=none;endArrow=block;endFill=0;endSize=16;fontFamily=Times New Roman;fontSize=14;" target="common" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="common-UC-02" edge="1" parent="1" source="common" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;edgeStyle=none;endArrow=none;fontFamily=Times New Roman;fontSize=14;" target="UC-02" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="common-UC-05" edge="1" parent="1" source="common" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;edgeStyle=none;endArrow=none;fontFamily=Times New Roman;fontSize=14;" target="UC-05" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="common-UC-06" edge="1" parent="1" source="common" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;edgeStyle=none;endArrow=none;fontFamily=Times New Roman;fontSize=14;" target="UC-06" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="common-UC-08" edge="1" parent="1" source="common" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;edgeStyle=none;endArrow=none;fontFamily=Times New Roman;fontSize=14;" target="UC-08" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;text;strokeColor=none;fillColor=none;align=center;fontFamily=Times New Roman;fontSize=14;" value="Порожній трикутник — узагальнення актора. Адміністратор не успадковує цю роль. Видимість визначає сервер." vertex="1">
+          <mxGeometry height="45" width="1020" x="10" y="730" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+<diagram id="uml-usecase-specific" name="UML-UC-01 · Спеціальні цілі">
+    <mxGraphModel dx="1776" dy="1286" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;text;strokeColor=none;fillColor=none;fontStyle=1;align=center;fontFamily=Times New Roman;fontSize=14;" value="UML-UC-01 · Спеціальні цілі ролей" vertex="1">
+          <mxGeometry height="40" width="1300" as="geometry" />
+        </mxCell>
+        <mxCell id="system" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;swimlane;startSize=35;collapsible=0;pointerEvents=0;fillColor=#f7f7f7;swimlaneFillColor=#ffffff;fontFamily=Times New Roman;fontSize=14;" value="Система управління заявками" vertex="1">
+          <mxGeometry height="680" width="880" x="220" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-01" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-01&lt;br&gt;Зареєструвати&lt;br&gt;заявку" vertex="1">
+          <mxGeometry height="75" width="220" x="30" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-04b" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-04b&lt;br&gt;Підтвердити&lt;br&gt;рішення" vertex="1">
+          <mxGeometry height="75" width="220" x="330" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-04c" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-04c&lt;br&gt;Відхилити&lt;br&gt;рішення" vertex="1">
+          <mxGeometry height="75" width="220" x="630" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-04a" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-04a&lt;br&gt;Опрацювати&lt;br&gt;заявку" vertex="1">
+          <mxGeometry height="75" width="220" x="30" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-03" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-03&lt;br&gt;Призначити&lt;br&gt;виконавця" vertex="1">
+          <mxGeometry height="75" width="220" x="630" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-07" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-07&lt;br&gt;Переглянути&lt;br&gt;строки" vertex="1">
+          <mxGeometry height="75" width="220" x="330" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-09" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-09&lt;br&gt;Отримати&lt;br&gt;зведення" vertex="1">
+          <mxGeometry height="75" width="220" x="630" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="UC-10" parent="system" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;ellipse;fontFamily=Times New Roman;fontSize=14;" value="UC-10&lt;br&gt;Змінити&lt;br&gt;налаштування" vertex="1">
+          <mxGeometry height="75" width="220" x="30" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="E1" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;labelPerimeter=1;fontFamily=Times New Roman;fontSize=14;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;spacingRight=8;" value="Заявник" vertex="1">
+          <mxGeometry height="75" width="50" x="630" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="E2" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;labelPerimeter=1;fontFamily=Times New Roman;fontSize=14;" value="Спеціаліст" vertex="1">
+          <mxGeometry height="75" width="50" x="50" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="E3" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;labelPerimeter=1;fontFamily=Times New Roman;fontSize=14;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;spacingRight=8;labelPosition=right;align=left;spacingLeft=8;" value="Координатор" vertex="1">
+          <mxGeometry height="75" width="50" x="1200" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="E4" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;labelPerimeter=1;fontFamily=Times New Roman;fontSize=14;" value="Адміністратор" vertex="1">
+          <mxGeometry height="75" width="50" x="50" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="E1-UC-01" edge="1" parent="1" source="E1" style="html=1;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;endArrow=none;fontFamily=Times New Roman;fontSize=14;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.7316384180790961;entryX=0.7022349362670928;entryY=0;" target="UC-01" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="404" y="95" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E1-UC-04b" edge="1" parent="1" source="E1" style="html=1;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;endArrow=none;fontFamily=Times New Roman;fontSize=14;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=1;entryX=0.5;entryY=0;" target="UC-04b" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="795" y="115" />
+              <mxPoint x="795" y="223" />
+              <mxPoint x="660" y="223" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E1-UC-04c" edge="1" parent="1" source="E1" style="html=1;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;endArrow=none;fontFamily=Times New Roman;fontSize=14;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.7240437158469945;entryX=0.29425914018675703;entryY=0;" target="UC-04c" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="915" y="94" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E2-UC-04a" edge="1" parent="1" source="E2" style="html=1;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;endArrow=none;fontFamily=Times New Roman;fontSize=14;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5643274853801169;entryX=0;entryY=0.2836344662076143;" target="UC-04a" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="182" y="437" />
+              <mxPoint x="182" y="476" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E2-UC-07" edge="1" parent="1" source="E2" style="html=1;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;endArrow=none;fontFamily=Times New Roman;fontSize=14;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.6111111111111108;entryX=0.20820253208766892;entryY=0;" target="UC-07" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="168" y="451" />
+              <mxPoint x="168" y="563" />
+              <mxPoint x="596" y="563" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E3-UC-03" edge="1" parent="1" source="E3" style="html=1;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;endArrow=none;fontFamily=Times New Roman;fontSize=14;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.569182389937107;entryX=1;entryY=0.2740176034056655;" target="UC-03" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1121" y="437" />
+              <mxPoint x="1121" y="476" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E3-UC-07" edge="1" parent="1" source="E3" style="html=1;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;endArrow=none;fontFamily=Times New Roman;fontSize=14;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.6150442477876102;entryX=0.7893143880759169;entryY=0;" target="UC-07" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1135" y="451" />
+              <mxPoint x="1135" y="563" />
+              <mxPoint x="724" y="563" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E3-UC-09" edge="1" parent="1" source="E3" style="html=1;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;endArrow=none;fontFamily=Times New Roman;fontSize=14;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=1;entryX=0.6207067125580952;entryY=0;" target="UC-09" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1149" y="475" />
+              <mxPoint x="1149" y="638" />
+              <mxPoint x="987" y="638" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E4-UC-10" edge="1" parent="1" source="E4" style="html=1;rounded=0;endArrow=open;endFill=0;strokeColor=#000000;strokeWidth=1.2;labelBackgroundColor=#ffffff;defaultLabelBackgroundColor=gap;endArrow=none;fontFamily=Times New Roman;fontSize=14;edgeStyle=orthogonalEdgeStyle;exitX=1;exitY=0.5292397660818718;entryX=0;entryY=0.38331352376233857;" target="UC-10" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="175" y="760" />
+              <mxPoint x="175" y="774" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend" parent="1" style="html=1;whiteSpace=wrap;fontColor=#000000;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.3;text;strokeColor=none;fillColor=none;align=center;fontFamily=Times New Roman;fontSize=14;" value="UC-04a/b/c деталізують US-04. Спільні цілі — на першому аркуші UML-UC-01. Умови доступу збережено." vertex="1">
+          <mxGeometry height="45" width="1280" x="10" y="920" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

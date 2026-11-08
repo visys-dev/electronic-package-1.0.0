@@ -1,0 +1,9 @@
+{
+  "asOf": "2026-10-25T13:00:00.000Z",
+  "responseElapsedMs": 1200000,
+  "resolutionElapsedMs": 7200000,
+  "responseTargetMs": 1800000,
+  "resolutionTargetMs": 7200000,
+  "responseBreached": false,
+  "resolutionBreached": false
+}

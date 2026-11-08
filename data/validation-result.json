@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "date": "2026-10-25",
+  "entities": 16,
+  "fixture_rows": 36,
+  "non_null_fixture_foreign_keys": 44,
+  "erd_pages": [
+    "erd-access",
+    "erd-tickets",
+    "erd-events"
+  ],
+  "all_entities_drawn": true,
+  "master_synchronized": true,
+  "font": "Times New Roman 14",
+  "limits": "Static XML/model/fixture checks only; no DBMS, SQL, API server or TEST-ID executed."
+}

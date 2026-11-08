@@ -1,0 +1,46 @@
+[
+  {
+    "file": "create-request.json",
+    "schema": "CreateTicketRequest"
+  },
+  {
+    "file": "create-response.json",
+    "schema": "Ticket"
+  },
+  {
+    "file": "assignment-request.json",
+    "schema": "AssignmentRequest"
+  },
+  {
+    "file": "resolve-request.json",
+    "schema": "StateRequest"
+  },
+  {
+    "file": "confirm-request.json",
+    "schema": "StateRequest"
+  },
+  {
+    "file": "version-error.json",
+    "schema": "Error"
+  },
+  {
+    "file": "validation-error.json",
+    "schema": "Error"
+  },
+  {
+    "file": "not-found-error.json",
+    "schema": "Error"
+  },
+  {
+    "file": "duplicate-key-error.json",
+    "schema": "Error"
+  },
+  {
+    "file": "timing-response.json",
+    "schema": "Timing"
+  },
+  {
+    "file": "empty-report.json",
+    "schema": "Summary"
+  }
+]

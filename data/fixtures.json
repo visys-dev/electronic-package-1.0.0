@@ -1,0 +1,312 @@
+{
+  "users": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "login": "requester-a",
+      "display_name": "Синтетичний requester-a",
+      "credential_hash": "NOT_A_REAL_HASH_REPLACE_WHEN_SEEDING",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000002",
+      "login": "requester-b",
+      "display_name": "Синтетичний requester-b",
+      "credential_hash": "NOT_A_REAL_HASH_REPLACE_WHEN_SEEDING",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "login": "specialist-q1",
+      "display_name": "Синтетичний specialist-q1",
+      "credential_hash": "NOT_A_REAL_HASH_REPLACE_WHEN_SEEDING",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000004",
+      "login": "coordinator-q1",
+      "display_name": "Синтетичний coordinator-q1",
+      "credential_hash": "NOT_A_REAL_HASH_REPLACE_WHEN_SEEDING",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000005",
+      "login": "administrator",
+      "display_name": "Синтетичний administrator",
+      "credential_hash": "NOT_A_REAL_HASH_REPLACE_WHEN_SEEDING",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000006",
+      "login": "specialist-q2",
+      "display_name": "Синтетичний specialist-q2",
+      "credential_hash": "NOT_A_REAL_HASH_REPLACE_WHEN_SEEDING",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000007",
+      "login": "coordinator-q2",
+      "display_name": "Синтетичний coordinator-q2",
+      "credential_hash": "NOT_A_REAL_HASH_REPLACE_WHEN_SEEDING",
+      "active": true,
+      "version": 1
+    }
+  ],
+  "roles": [
+    {
+      "code": "requester"
+    },
+    {
+      "code": "specialist"
+    },
+    {
+      "code": "coordinator"
+    },
+    {
+      "code": "administrator"
+    }
+  ],
+  "user_roles": [
+    {
+      "user_id": "00000000-0000-4000-8000-000000000001",
+      "role_code": "requester",
+      "active": true
+    },
+    {
+      "user_id": "00000000-0000-4000-8000-000000000002",
+      "role_code": "requester",
+      "active": true
+    },
+    {
+      "user_id": "00000000-0000-4000-8000-000000000003",
+      "role_code": "specialist",
+      "active": true
+    },
+    {
+      "user_id": "00000000-0000-4000-8000-000000000004",
+      "role_code": "coordinator",
+      "active": true
+    },
+    {
+      "user_id": "00000000-0000-4000-8000-000000000005",
+      "role_code": "administrator",
+      "active": true
+    },
+    {
+      "user_id": "00000000-0000-4000-8000-000000000006",
+      "role_code": "specialist",
+      "active": true
+    },
+    {
+      "user_id": "00000000-0000-4000-8000-000000000007",
+      "role_code": "coordinator",
+      "active": true
+    }
+  ],
+  "queues": [
+    {
+      "id": "00000000-0000-4000-8000-000000000201",
+      "name": "Черга 1",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000202",
+      "name": "Черга 2",
+      "active": true,
+      "version": 1
+    }
+  ],
+  "queue_memberships": [
+    {
+      "id": "00000000-0000-4000-8000-000000000501",
+      "queue_id": "00000000-0000-4000-8000-000000000201",
+      "user_id": "00000000-0000-4000-8000-000000000003",
+      "member_role": "specialist",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000502",
+      "queue_id": "00000000-0000-4000-8000-000000000201",
+      "user_id": "00000000-0000-4000-8000-000000000004",
+      "member_role": "coordinator",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000503",
+      "queue_id": "00000000-0000-4000-8000-000000000202",
+      "user_id": "00000000-0000-4000-8000-000000000006",
+      "member_role": "specialist",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000504",
+      "queue_id": "00000000-0000-4000-8000-000000000202",
+      "user_id": "00000000-0000-4000-8000-000000000007",
+      "member_role": "coordinator",
+      "active": true,
+      "version": 1
+    }
+  ],
+  "categories": [
+    {
+      "id": "00000000-0000-4000-8000-000000000301",
+      "name": "Категорія 1",
+      "queue_id": "00000000-0000-4000-8000-000000000201",
+      "active": true,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000302",
+      "name": "Категорія 2",
+      "queue_id": "00000000-0000-4000-8000-000000000202",
+      "active": true,
+      "version": 1
+    }
+  ],
+  "sla_policies": [
+    {
+      "id": "00000000-0000-4000-8000-000000000401",
+      "category_id": "00000000-0000-4000-8000-000000000301",
+      "priority": "normal",
+      "revision": 1,
+      "response_target_ms": 1800000,
+      "resolution_target_ms": 7200000,
+      "active": true
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000402",
+      "category_id": "00000000-0000-4000-8000-000000000302",
+      "priority": "normal",
+      "revision": 1,
+      "response_target_ms": 1800000,
+      "resolution_target_ms": 7200000,
+      "active": true
+    }
+  ],
+  "tickets": [
+    {
+      "id": "00000000-0000-4000-8000-000000001001",
+      "number": 1,
+      "requester_id": "00000000-0000-4000-8000-000000000001",
+      "category_id": "00000000-0000-4000-8000-000000000301",
+      "queue_id": "00000000-0000-4000-8000-000000000201",
+      "assignee_id": null,
+      "previous_ticket_id": null,
+      "title": "Не працює друк",
+      "description": "Документ не надходить до принтера.",
+      "priority": "normal",
+      "state": "new",
+      "policy_id": "00000000-0000-4000-8000-000000000401",
+      "response_target_ms": 1800000,
+      "resolution_target_ms": 7200000,
+      "created_at": "2026-10-25T10:00:00.000Z",
+      "updated_at": "2026-10-25T10:00:00.000Z",
+      "first_assigned_at": null,
+      "first_response_at": null,
+      "solution_comment_id": null,
+      "response_breached": false,
+      "resolution_breached": false,
+      "version": 1
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000001002",
+      "number": 2,
+      "requester_id": "00000000-0000-4000-8000-000000000002",
+      "category_id": "00000000-0000-4000-8000-000000000302",
+      "queue_id": "00000000-0000-4000-8000-000000000202",
+      "assignee_id": null,
+      "previous_ticket_id": null,
+      "title": "Проблема з мережею",
+      "description": "Немає з’єднання з навчальним ресурсом.",
+      "priority": "normal",
+      "state": "new",
+      "policy_id": "00000000-0000-4000-8000-000000000402",
+      "response_target_ms": 1800000,
+      "resolution_target_ms": 7200000,
+      "created_at": "2026-10-25T10:00:00.000Z",
+      "updated_at": "2026-10-25T10:00:00.000Z",
+      "first_assigned_at": null,
+      "first_response_at": null,
+      "solution_comment_id": null,
+      "response_breached": false,
+      "resolution_breached": false,
+      "version": 1
+    }
+  ],
+  "comments": [],
+  "history_events": [
+    {
+      "id": "00000000-0000-4000-8000-000000003001",
+      "ticket_id": "00000000-0000-4000-8000-000000001001",
+      "actor_id": "00000000-0000-4000-8000-000000000001",
+      "event_type": "created",
+      "visibility": "public",
+      "changes": {
+        "state": {
+          "old": null,
+          "new": "new"
+        }
+      },
+      "occurred_at": "2026-10-25T10:00:00.000Z"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000003002",
+      "ticket_id": "00000000-0000-4000-8000-000000001002",
+      "actor_id": "00000000-0000-4000-8000-000000000002",
+      "event_type": "created",
+      "visibility": "public",
+      "changes": {
+        "state": {
+          "old": null,
+          "new": "new"
+        }
+      },
+      "occurred_at": "2026-10-25T10:00:00.000Z"
+    }
+  ],
+  "ticket_intervals": [
+    {
+      "id": "00000000-0000-4000-8000-000000002001",
+      "ticket_id": "00000000-0000-4000-8000-000000001001",
+      "state": "new",
+      "started_at": "2026-10-25T10:00:00.000Z",
+      "ended_at": null
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000002002",
+      "ticket_id": "00000000-0000-4000-8000-000000001002",
+      "state": "new",
+      "started_at": "2026-10-25T10:00:00.000Z",
+      "ended_at": null
+    }
+  ],
+  "outbox_events": [],
+  "notifications": [],
+  "idempotency_keys": [
+    {
+      "user_id": "00000000-0000-4000-8000-000000000001",
+      "operation_key": "00000000-0000-4000-8000-000000000100",
+      "request_digest": "47b61c1ae7d73fde571d75bfbb2a1455773e962eb9f695c9d04d4d74d96a2831",
+      "ticket_id": "00000000-0000-4000-8000-000000001001",
+      "created_at": "2026-10-25T10:00:00.000Z"
+    },
+    {
+      "user_id": "00000000-0000-4000-8000-000000000002",
+      "operation_key": "00000000-0000-4000-8000-000000000101",
+      "request_digest": "765955e3893c182648263960f532af12a92ba11f4f8a5efdeca6f9c6d277bda9",
+      "ticket_id": "00000000-0000-4000-8000-000000001002",
+      "created_at": "2026-10-25T10:00:00.000Z"
+    }
+  ],
+  "admin_events": [],
+  "sessions": []
+}

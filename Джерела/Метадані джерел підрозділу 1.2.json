@@ -1,0 +1,49 @@
+{
+  "checked_on": "2026-10-24",
+  "sources": [
+    {
+      "id": "SRC-021",
+      "number": 15,
+      "author": "arc42",
+      "title": "3. Context and Scope",
+      "url": "https://docs.arc42.org/section-3/",
+      "locators": [
+        "Content",
+        "3.1 Business context"
+      ],
+      "checked_on": "2026-10-24",
+      "limits": "Підтверджує підхід до меж, учасників обміну та вхідних/вихідних даних; не визначає конкретні ролі, функції або припущення проєкту."
+    },
+    {
+      "id": "SRC-016",
+      "number": 16,
+      "author": "OWASP Foundation",
+      "title": "Authorization Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "locators": [
+        "Enforce Least Privileges",
+        "Deny by Default",
+        "Validate the Permissions on Every Request",
+        "Verify that Authorization Checks are Performed in the Right Location"
+      ]
+    }
+  ],
+  "source_archives_saved": false,
+  "superseded_sources": [
+    {
+      "id": "SRC-015",
+      "author": "NASA",
+      "title": "System Engineering Handbook: Appendix",
+      "part": "Appendix S: Concept of Operations Annotated Outline",
+      "url": "https://www.nasa.gov/reference/system-engineering-handbook-appendix/",
+      "locators": [
+        "1.1.2 Assumptions and Constraints",
+        "1.2.2 System Scope",
+        "3.2 Overview of System and Key Elements",
+        "3.3 Interfaces"
+      ],
+      "status": "Замінено за зауваженням користувача; не використовується в поточній редакції підрозділу 1.2",
+      "former_number": 15
+    }
+  ]
+}

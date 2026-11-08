@@ -1,0 +1,74 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="context-dfd" name="DFD-CONTEXT-01 · Контекст">
+    <mxGraphModel dx="1653" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;align=center;strokeColor=none;fillColor=none;fontFamily=Times New Roman;fontSize=14;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;DFD-CONTEXT-01 · Контекст системи&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="900" as="geometry" />
+        </mxCell>
+        <mxCell id="P0" parent="1" style="swimlane;html=1;horizontal=1;startSize=40;rounded=1;arcSize=16;absoluteArcSize=1;collapsible=0;fillColor=#ffffff;swimlaneFillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontStyle=1;fontFamily=Times New Roman;fontSize=14;" value="0" vertex="1">
+          <mxGeometry height="460" width="240" x="330" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="P0-name" connectable="0" parent="P0" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;strokeColor=none;fillColor=none;fontStyle=1;fontFamily=Times New Roman;fontSize=14;" value="Управління заявками&lt;br&gt;служби технічної&lt;br&gt;підтримки" vertex="1">
+          <mxGeometry height="420" width="220" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="E1" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontFamily=Times New Roman;fontSize=14;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;E1&lt;br&gt;Заявник&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="180" x="10" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="E2" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontFamily=Times New Roman;fontSize=14;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;E2&lt;br&gt;Спеціаліст&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="180" x="710" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="E3" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontFamily=Times New Roman;fontSize=14;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;E3&lt;br&gt;Координатор&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="180" x="10" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="E4" parent="1" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#000000;fontFamily=Times New Roman;fontSize=14;" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;E4&lt;br&gt;Адміністратор&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="180" x="710" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="F1" edge="1" parent="1" source="E1" style="html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitX=1;exitY=0.28;entryX=0;entryY=0.16;labelPlacement=auto;fontFamily=Times New Roman;fontSize=14;labelWidth=110;whiteSpace=wrap;" target="P0" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;F1 Дані звернення&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F2" edge="1" parent="1" source="P0" style="html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitX=0;exitY=0.29;entryX=1;entryY=0.82;labelPlacement=auto;fontFamily=Times New Roman;fontSize=14;labelWidth=110;whiteSpace=wrap;" target="E1" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;F2 Відомості власної&lt;br&gt;заявки&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.0037" y="-12" as="geometry">
+            <mxPoint as="offset" x="-1.053" y="73.261" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F3" edge="1" parent="1" source="E2" style="html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitX=0;exitY=0.28;entryX=1;entryY=0.16;labelPlacement=auto;fontFamily=Times New Roman;fontSize=14;labelWidth=110;whiteSpace=wrap;" target="P0" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;F3 Дані опрацювання&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.0036" y="-12" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F4" edge="1" parent="1" source="P0" style="html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitX=1;exitY=0.29;entryX=0;entryY=0.82;labelPlacement=auto;fontFamily=Times New Roman;fontSize=14;labelWidth=110;whiteSpace=wrap;" target="E2" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;F4 Доступні заявки&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F5" edge="1" parent="1" source="E3" style="html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitX=1;exitY=0.28;entryX=0;entryY=0.72;labelPlacement=auto;fontFamily=Times New Roman;fontSize=14;labelWidth=110;whiteSpace=wrap;" target="P0" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;F5 Дані розподілу&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F6" edge="1" parent="1" source="P0" style="html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitX=0;exitY=0.85;entryX=1;entryY=0.82;labelPlacement=auto;fontFamily=Times New Roman;fontSize=14;labelWidth=110;whiteSpace=wrap;" target="E3" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;F6 Зведення й&lt;br&gt;ескалації&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F7" edge="1" parent="1" source="E4" style="html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitX=0;exitY=0.28;entryX=1;entryY=0.72;labelPlacement=auto;fontFamily=Times New Roman;fontSize=14;labelWidth=110;whiteSpace=wrap;" target="P0" value="F7 Дані налаштувань">
+          <mxGeometry relative="1" x="-0.0005" y="-12" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F8" edge="1" parent="1" source="P0" style="html=1;endArrow=open;endFill=0;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;exitX=1;exitY=0.85;entryX=0;entryY=0.82;labelPlacement=auto;fontFamily=Times New Roman;fontSize=14;labelWidth=110;whiteSpace=wrap;" target="E4" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 14px;&quot;&gt;F8 Стан налаштувань&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend" parent="1" style="text;html=1;align=center;strokeColor=none;fillColor=none;fontFamily=Times New Roman;fontSize=14;" value="&lt;font face=&quot;Times New Roman&quot;&gt;Прямокутник — зовнішня сутність; процес 0 — уся система; стрілки — потоки даних.&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="900" y="550" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

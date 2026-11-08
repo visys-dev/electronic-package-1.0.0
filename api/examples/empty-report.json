@@ -1,0 +1,12 @@
+{
+  "asOf": "2026-10-25T13:00:00.000Z",
+  "byState": {
+    "new": 0,
+    "assigned": 0,
+    "in_progress": 0,
+    "waiting_requester": 0,
+    "resolved": 0,
+    "closed": 0
+  },
+  "everBreachedCount": 0
+}

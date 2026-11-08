@@ -1,0 +1,21 @@
+{
+  "id": "00000000-0000-4000-8000-000000001001",
+  "number": 1,
+  "requesterId": "00000000-0000-4000-8000-000000000001",
+  "categoryId": "00000000-0000-4000-8000-000000000301",
+  "queueId": "00000000-0000-4000-8000-000000000201",
+  "assigneeId": null,
+  "previousTicketId": null,
+  "title": "Не працює друк",
+  "description": "Документ не надходить до принтера.",
+  "priority": "normal",
+  "state": "new",
+  "responseTargetMs": 1800000,
+  "resolutionTargetMs": 7200000,
+  "createdAt": "2026-10-25T10:00:00.000Z",
+  "updatedAt": "2026-10-25T10:00:00.000Z",
+  "firstAssignedAt": null,
+  "firstResponseAt": null,
+  "solutionCommentId": null,
+  "version": 1
+}

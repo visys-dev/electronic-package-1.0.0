@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "date": "2026-10-25",
+  "python": "3.14.4",
+  "tools": {
+    "openapi-spec-validator": "0.7.2",
+    "openapi-schema-validator": "0.6.3",
+    "jsonschema": "4.26.0",
+    "PyYAML": "6.0.3"
+  },
+  "specification": "OpenAPI 3.1.1",
+  "sha256": "becdc77238dfe7ea7fbe41ffbaa4f77a028e2d8fa428b76653f1bcd78a6045aa",
+  "operations": 33,
+  "positive_examples": 11,
+  "negative_schema_cases": 8,
+  "positive_files": [
+    "create-request.json",
+    "create-response.json",
+    "assignment-request.json",
+    "resolve-request.json",
+    "confirm-request.json",
+    "version-error.json",
+    "validation-error.json",
+    "not-found-error.json",
+    "duplicate-key-error.json",
+    "timing-response.json",
+    "empty-report.json"
+  ],
+  "negative_cases": [
+    "foreign-owner",
+    "server-state",
+    "oversize-title",
+    "empty-title",
+    "invalid-category-format",
+    "undefined-state",
+    "invalid-version",
+    "secret-in-output"
+  ],
+  "arithmetic_example": "120 minutes; equality not breached",
+  "limits": "Static contract and example validation only. TEST-01–TEST-39 not executed. No server, database transaction, access-control or load tests."
+}

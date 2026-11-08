@@ -1,0 +1,6 @@
+{
+  "code": "VERSION_CONFLICT",
+  "message": "Заявку вже змінено. Оновіть її дані.",
+  "correlationId": "00000000-0000-4000-8000-000000008001",
+  "fieldErrors": []
+}

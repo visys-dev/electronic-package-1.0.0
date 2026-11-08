@@ -1,0 +1,9 @@
+*
+!Dockerfile
+!requirements.lock.txt
+!alembic.ini
+!app/
+!app/**
+!migrations/
+!migrations/**
+**/__pycache__

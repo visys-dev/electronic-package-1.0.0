@@ -1,0 +1,95 @@
+{
+  "checked_on": "2026-10-24",
+  "new_sources": [
+    {
+      "id": "SRC-022",
+      "number": 17,
+      "author": "IEEE Computer Society",
+      "editor": "Hironori Washizaki",
+      "title": "Guide to the Software Engineering Body of Knowledge (SWEBOK Guide)",
+      "version": "v4.0a",
+      "release_as_stated_on_cover": "August 2026",
+      "url": "https://ieeecs-media.computer.org/media/education/swebok/swebok-v4.pdf",
+      "locators": [
+        "Chapter 1: Software Requirements",
+        "3.1 Basic Requirements Analysis",
+        "printed page 1-8; PDF page 50 (1-based)"
+      ],
+      "verified": "Окрема вимога має бути однозначною, перевірюваною та відображати потреби зацікавлених сторін; сукупність вимог — повною, узгодженою та здійсненною в межах обмежень.",
+      "limits": "Методична основа з програмної інженерії; не нормативна вимога кафедри й не доказ валідації конкретних вимог курсової. Кількість вимог і числові цілі задано проєктом.",
+      "checked_on": "2026-10-24",
+      "verification_method": "Прочитано відповідний розділ офіційного PDF; сторінку 50 також отримано засобом screenshot. Повний посібник не аналізувався."
+    },
+    {
+      "id": "SRC-018",
+      "number": 18,
+      "author": "Cucumber",
+      "title": "Reference (Gherkin)",
+      "url": "https://cucumber.io/docs/gherkin/reference/",
+      "locators": [
+        "Given",
+        "When",
+        "Then"
+      ],
+      "verified": "Given описує початковий контекст, When — подію, Then — очікуваний спостережуваний результат.",
+      "limits": "Використано форму опису; не заявлено встановлення Cucumber або виконання автоматизованих тестів."
+    },
+    {
+      "id": "SRC-019",
+      "number": 19,
+      "author": "W3C",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "version": "W3C Recommendation, 12 December 2024",
+      "locators": [
+        "2.1.1 Keyboard",
+        "2.1.2 No Keyboard Trap",
+        "2.4.7 Focus Visible",
+        "3.3.1 Error Identification"
+      ],
+      "verified": "Вибрані критерії охоплюють клавіатуру, відсутність пастки, видимий фокус і текстове визначення помилок введення.",
+      "limits": "Чотири критерії не підтверджують повної відповідності WCAG A/AA. Збереження введених значень — додаткова вимога проєкту."
+    },
+    {
+      "id": "SRC-020",
+      "number": 20,
+      "author": "OWASP Foundation",
+      "title": "Logging Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "locators": [
+        "Event attributes",
+        "Data to exclude"
+      ],
+      "verified": "Рекомендовано визначати атрибути подій та виключати з журналів секрети й чутливі дані.",
+      "limits": "Заборона записувати будь-які тіла заявок і коментарів, перелік полів та охоплення запитів визначені проєктом."
+    }
+  ],
+  "reused_sources": [
+    {
+      "id": "SRC-016",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "locators": [
+        "Enforce Least Privileges",
+        "Deny by Default",
+        "Validate the Permissions on Every Request",
+        "Verify that Authorization Checks are Performed in the Right Location"
+      ]
+    }
+  ],
+  "source_archives_saved": false,
+  "superseded_sources": [
+    {
+      "id": "SRC-017",
+      "author": "NASA",
+      "title": "4.2 Technical Requirements Definition",
+      "url": "https://www.nasa.gov/reference/4-2-technical-requirements-definition/",
+      "locators": [
+        "4.2.1.2.4 Validate Technical Requirements"
+      ],
+      "verified": "Валідація вимог охоплює перевірюваність, здійсненність, однозначність і трасування.",
+      "limits": "Методологічний орієнтир, не обов’язковий стандарт кафедри; кількість вимог визначено планом проєкту.",
+      "former_number": 17,
+      "status": "Замінено за коментарем користувача; не входить до активної бібліографії"
+    }
+  ]
+}

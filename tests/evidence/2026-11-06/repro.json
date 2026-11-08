@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "project": "coursework-support-repro-final",
+  "imageId": "sha256:315ed24b263d15c1ff4afd8a01b4f5e113cb960d6bafe924ff2c20b972646770",
+  "initialTicketCount": 0,
+  "firstTicketNumber": 1,
+  "finalState": "closed",
+  "database": "separate fresh volume",
+  "hostPort": 8444,
+  "tlsVerification": "local CA and hostname",
+  "migrations": "0001",
+  "syntheticSeed": "completed",
+  "note": "After this check only HTML maxlength was removed for Unicode password input; backend, migrations and startup configuration unchanged."
+}

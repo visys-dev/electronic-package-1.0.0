@@ -1,0 +1,11 @@
+{
+  "code": "VALIDATION_ERROR",
+  "message": "Перевірте заповнення полів.",
+  "correlationId": "00000000-0000-4000-8000-000000008002",
+  "fieldErrors": [
+    {
+      "field": "title",
+      "message": "Вкажіть тему заявки."
+    }
+  ]
+}

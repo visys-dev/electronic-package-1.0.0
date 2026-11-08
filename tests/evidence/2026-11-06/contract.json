@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "date": "2026-11-06",
+  "sha256": "066b6f06bf7e6eaeae00b59cb886db1ddd7f7208629b6ad2a6abcb04fdeeb667",
+  "validator": "0.9.0",
+  "operationCount": 33,
+  "change": "Cookie Path=/ agrees with session policy; no schema or route changes"
+}

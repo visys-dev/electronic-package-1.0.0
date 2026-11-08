@@ -1,0 +1,3584 @@
+openapi: 3.1.1
+info:
+  title: API системи управління заявками технічної підтримки
+  version: 0.1.0
+  description: 'Проєктний контракт; не підтверджує наявності сервера. Повний обсяг US-01–US-10. JSON, UTC, серверна авторизація.
+    Нормалізація тексту trim до перевірки довжини. Всі відповіді захищених ресурсів Cache-Control: no-store. Відповіді не
+    включають хеші паролів, внутрішні нотатки заявнику чи чужі дані.'
+servers:
+- url: https://support.example.invalid/api/v1
+  description: Умовна адреса для опису; робочий сервер не розгорнуто.
+security:
+- sessionCookie: []
+paths:
+  /session:
+    post:
+      operationId: API-LOGIN
+      summary: Локальний вхід
+      description: 'Доступ: Неавтентифікований користувач. До входу перевіряються Origin і same-origin. Помилка облікових
+        даних — узагальнена 401. Паролі й токени не журналюються. Політика паролів і throttling деталізується у 2.3.'
+      x-requirements: []
+      responses:
+        '200':
+          description: Успіх
+          headers: &id001
+            X-Correlation-ID:
+              schema: &id002
+                type: string
+                format: uuid
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+            Set-Cookie:
+              schema:
+                type: string
+              description: support_session=<opaque>; Secure; HttpOnly; SameSite=Strict; Path=/
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id001
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id001
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id001
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id001
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id001
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id001
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id001
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+    get:
+      operationId: API-ME
+      summary: Поточний сеанс
+      description: 'Доступ: Активний користувач.'
+      x-requirements: []
+      responses:
+        '200':
+          description: Успіх
+          headers: &id003
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id003
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id003
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id003
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id003
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id003
+    delete:
+      operationId: API-LOGOUT
+      summary: Відкликати поточний сеанс
+      description: 'Доступ: Активний користувач. Сервер відкликає сеанс та очищує cookie.'
+      x-requirements: []
+      responses:
+        '204':
+          description: Успіх
+          headers: &id004
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id004
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id004
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id004
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id004
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id004
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id004
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id004
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+  /tickets:
+    post:
+      operationId: API-01
+      summary: Створити заявку
+      description: 'Доступ: Заявник. requesterId визначає сервер; normal; new; черга з категорії. previousTicketId — лише
+        власна доступна closed-заявка. Дозволена категорія/черга/політика та цілі перевіряються в транзакції. Порожній текст
+        після trim — 422.'
+      x-requirements:
+      - US-01
+      responses:
+        '201':
+          description: Успіх
+          headers: &id005
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+            Location:
+              schema:
+                type: string
+              description: URI створеної заявки.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+              example:
+                id: 00000000-0000-4000-8000-000000001001
+                number: 1
+                requesterId: 00000000-0000-4000-8000-000000000001
+                categoryId: 00000000-0000-4000-8000-000000000301
+                queueId: 00000000-0000-4000-8000-000000000201
+                assigneeId: null
+                previousTicketId: null
+                title: Не працює друк
+                description: Документ не надходить до принтера.
+                priority: normal
+                state: new
+                responseTargetMs: 1800000
+                resolutionTargetMs: 7200000
+                createdAt: '2026-10-25T10:00:00.000Z'
+                updatedAt: '2026-10-25T10:00:00.000Z'
+                firstAssignedAt: null
+                firstResponseAt: null
+                solutionCommentId: null
+                version: 1
+        '200':
+          description: 'Повтор: та сама заявка без дубля; поточне дозволене представлення після повторної авторизації.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+          headers: *id005
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id005
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id005
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id005
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id005
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id005
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: VALIDATION_ERROR
+                message: Перевірте заповнення полів.
+                correlationId: 00000000-0000-4000-8000-000000008002
+                fieldErrors:
+                - field: title
+                  message: Вкажіть тему заявки.
+          headers: *id005
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id005
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema: *id002
+        description: Проєктний ключ повтору створення; не твердження про стандартизацію заголовка.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTicketRequest'
+            example:
+              title: Не працює друк
+              description: Документ не надходить до принтера.
+              categoryId: 00000000-0000-4000-8000-000000000301
+    get:
+      operationId: API-02
+      summary: Список доступних заявок
+      description: 'Доступ: Заявник, спеціаліст, координатор. Фільтри застосовуються тільки після обмеження дозволених заявок.
+        Порядок createdAt,id; cursor непрозорий і перевірений сервером.'
+      x-requirements:
+      - US-02
+      responses:
+        '200':
+          description: Успіх
+          headers: &id006
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketPage'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id006
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id006
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id006
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id006
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id006
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 300
+      - name: number
+        in: query
+        required: false
+        schema: &id035
+          type: integer
+          minimum: 1
+      - name: state
+        in: query
+        required: false
+        schema: &id036
+          type: string
+          enum:
+          - new
+          - assigned
+          - in_progress
+          - waiting_requester
+          - resolved
+          - closed
+      - name: categoryId
+        in: query
+        required: false
+        schema: *id002
+      - name: assigneeId
+        in: query
+        required: false
+        schema: *id002
+  /tickets/{ticketId}:
+    get:
+      operationId: API-03
+      summary: Картка доступної заявки
+      description: 'Доступ: Власник або підтримка дозволеної черги.'
+      x-requirements:
+      - US-02
+      responses:
+        '200':
+          description: Успіх
+          headers: &id007
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id007
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id007
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id007
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id007
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id007
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema: *id002
+  /tickets/{ticketId}/assignment:
+    post:
+      operationId: API-04
+      summary: Призначити або перепризначити
+      description: 'Доступ: Координатор своєї черги. Перше призначення new→assigned; повторне потребує reason. Закрита заявка
+        незмінна. expectedVersion захищає від конкурентної зміни.'
+      x-requirements:
+      - US-03
+      responses:
+        '200':
+          description: Успіх
+          headers: &id008
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id008
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id008
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id008
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id008
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: VERSION_CONFLICT
+                message: Заявку вже змінено. Оновіть її дані.
+                correlationId: 00000000-0000-4000-8000-000000008001
+                fieldErrors: []
+          headers: *id008
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id008
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id008
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignmentRequest'
+  /tickets/{ticketId}/priority:
+    post:
+      operationId: API-05
+      summary: Уточнити пріоритет
+      description: 'Доступ: Координатор своєї черги. Тільки firstAssignedAt=null; до заміни цілей оцінюються старі порушення,
+        createdAt зберігається.'
+      x-requirements:
+      - US-03
+      responses:
+        '200':
+          description: Успіх
+          headers: &id009
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id009
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id009
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id009
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id009
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id009
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id009
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id009
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriorityRequest'
+  /tickets/{ticketId}/state:
+    post:
+      operationId: API-06
+      summary: Виконати дозволений перехід
+      description: 'Доступ: Призначений спеціаліст або власник згідно з переходом. BR-04: text обов’язковий для waiting_requester,
+        resolved та відхилення resolved→in_progress. Для waiting_requester→in_progress потрібна відповідь власника після початку
+        паузи або text причини. Власник передає поточний solutionCommentId при підтвердженні/відхиленні. Закрита заявка не
+        поновлюється. Зміни стану/повідомлення/історії/інтервалу атомарні. Власна заявка не скасовує дозволів призначеного
+        спеціаліста: solution/clarification є діями підтримки також за збігу виконавця і власника.'
+      x-requirements:
+      - US-04
+      responses:
+        '200':
+          description: Успіх
+          headers: &id010
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id010
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id010
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id010
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id010
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id010
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id010
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id010
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StateRequest'
+  /tickets/{ticketId}/comments:
+    post:
+      operationId: API-07
+      summary: Додати повідомлення
+      description: 'Доступ: Власник або підтримка дозволеної черги. Власник — тільки public; internal — тільки спеціаліст/координатор.
+        closed не змінюється. Повертається нова версія агрегату; повідомлення читається API-08. Повтор з прийнятою expectedVersion
+        дає 409, а не дубль. Для власника internal заборонено незалежно від суміщення ролей. Його звичайний public-коментар
+        має контекст requester і не встановлює першу відповідь.'
+      x-requirements:
+      - US-05
+      responses:
+        '200':
+          description: Успіх
+          headers: &id011
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id011
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id011
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id011
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id011
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id011
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id011
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id011
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+    get:
+      operationId: API-08
+      summary: Дозволені повідомлення
+      description: 'Доступ: Власник або підтримка дозволеної черги. Для власника internal виключено до пагінації. Порядок
+        createdAt,id.'
+      x-requirements:
+      - US-05
+      responses:
+        '200':
+          description: Успіх
+          headers: &id012
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentPage'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id012
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id012
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id012
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id012
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id012
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema: *id002
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 300
+  /tickets/{ticketId}/history:
+    get:
+      operationId: API-09
+      summary: Дозволена історія
+      description: 'Доступ: Власник або підтримка дозволеної черги. Порядок occurredAt,id; public-проєкція не містить private-подій
+        та значень. Немає операцій редагування/видалення історії.'
+      x-requirements:
+      - US-06
+      responses:
+        '200':
+          description: Успіх
+          headers: &id013
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryPage'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id013
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id013
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id013
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id013
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id013
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema: *id002
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 300
+  /tickets/{ticketId}/timing:
+    get:
+      operationId: API-10
+      summary: Поточні часові показники
+      description: 'Доступ: Спеціаліст або координатор дозволеної черги. Обчислення на asOf у UTC. responseElapsedMs зупиняється
+        на першій публічній відповіді підтримки. resolutionElapsedMs — сума new/assigned/in_progress. Ознака = збережене порушення
+        OR поточне elapsed>target. GET не змінює дані.'
+      x-requirements:
+      - US-07
+      responses:
+        '200':
+          description: Успіх
+          headers: &id014
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timing'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id014
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id014
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id014
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id014
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id014
+      parameters:
+      - name: ticketId
+        in: path
+        required: true
+        schema: *id002
+  /notifications:
+    get:
+      operationId: API-11
+      summary: Власні внутрішні сповіщення
+      description: 'Доступ: Заявник, спеціаліст, координатор. Лише адресат і лише за актуального дозволу на заявку; фільтрація
+        до пагінації. Порядок createdAt,id; відсутність доступу приховує сповіщення.'
+      x-requirements:
+      - US-08
+      responses:
+        '200':
+          description: Успіх
+          headers: &id015
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationPage'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id015
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id015
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id015
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id015
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id015
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 300
+  /notifications/{notificationId}:
+    put:
+      operationId: API-12
+      summary: Позначити власне сповіщення прочитаним
+      description: 'Доступ: Адресат з актуальним доступом до заявки. read=true; перша readAt зберігається, повтор не змінює
+        її.'
+      x-requirements:
+      - US-08
+      responses:
+        '200':
+          description: Успіх
+          headers: &id016
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id016
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id016
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id016
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id016
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id016
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id016
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id016
+      parameters:
+      - name: notificationId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReadNotification'
+  /reports/tickets:
+    get:
+      operationId: API-13
+      summary: Поточне зведення
+      description: 'Доступ: Координатор своїх черг. Без queueId — усі дозволені черги; чужа queueId — 404. Повний набір станів,
+        нулі для порожнього набору. everBreachedCount враховує заявку один раз; поточні ще не зафіксовані порушення обчислюються
+        на asOf.'
+      x-requirements:
+      - US-09
+      responses:
+        '200':
+          description: Успіх
+          headers: &id017
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Summary'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id017
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id017
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id017
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id017
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id017
+      parameters:
+      - name: queueId
+        in: query
+        required: false
+        schema: *id002
+  /categories:
+    get:
+      operationId: API-14
+      summary: Категорії для створення
+      description: 'Доступ: Заявник. Тільки активні категорії активних черг з чинною normal-політикою. Без адміністраторських
+        полів.'
+      x-requirements:
+      - US-01
+      responses:
+        '200':
+          description: Успіх
+          headers: &id018
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryChoices'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id018
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id018
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id018
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id018
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id018
+  /queues/{queueId}/assignees:
+    get:
+      operationId: API-15
+      summary: Допустимі виконавці
+      description: 'Доступ: Координатор своєї черги. Лише активні спеціалісти з активним членством та глобальною роллю specialist.'
+      x-requirements:
+      - US-03
+      responses:
+        '200':
+          description: Успіх
+          headers: &id019
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssigneeChoices'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id019
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id019
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id019
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id019
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id019
+      parameters:
+      - name: queueId
+        in: path
+        required: true
+        schema: *id002
+  /admin/users:
+    get:
+      operationId: API-ADMIN-USERS-LIST
+      summary: Адміністративний список users
+      description: 'Доступ: Адміністратор. Без змісту заявок; пароль і хеш ніколи не повертаються.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id020
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id020
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id020
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id020
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id020
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id020
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 300
+    post:
+      operationId: API-ADMIN-USERS-CREATE
+      summary: Створити users
+      description: 'Доступ: Адміністратор. Конфігураційна зміна та admin_events атомарні. Конфлікт унікальності — 409.'
+      x-requirements:
+      - US-10
+      responses:
+        '201':
+          description: Успіх
+          headers: &id021
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id021
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id021
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id021
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id021
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id021
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id021
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id021
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+  /admin/users/{userId}:
+    put:
+      operationId: API-ADMIN-USERS-UPDATE
+      summary: Оновити users
+      description: 'Доступ: Адміністратор. expectedVersion; заміна дозволених полів. Зняття ролі specialist/деактивація користувача
+        з незакритими призначеннями — 409 ACTIVE_ASSIGNMENTS без переліку/змісту заявок. Права підтримки не надаються самою
+        адміністративною роллю.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id022
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id022
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id022
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id022
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id022
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id022
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id022
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id022
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+  /admin/queues:
+    get:
+      operationId: API-ADMIN-QUEUES-LIST
+      summary: Адміністративний список queues
+      description: 'Доступ: Адміністратор. Без змісту заявок; пароль і хеш ніколи не повертаються.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id023
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueList'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id023
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id023
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id023
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id023
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id023
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 300
+    post:
+      operationId: API-ADMIN-QUEUES-CREATE
+      summary: Створити queues
+      description: 'Доступ: Адміністратор. Конфігураційна зміна та admin_events атомарні. Конфлікт унікальності — 409.'
+      x-requirements:
+      - US-10
+      responses:
+        '201':
+          description: Успіх
+          headers: &id024
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id024
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id024
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id024
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id024
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id024
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id024
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id024
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueueCreate'
+  /admin/queues/{queueId}:
+    put:
+      operationId: API-ADMIN-QUEUES-UPDATE
+      summary: Оновити queues
+      description: 'Доступ: Адміністратор. expectedVersion; заміна дозволених полів. Зняття ролі specialist/деактивація користувача
+        з незакритими призначеннями — 409 ACTIVE_ASSIGNMENTS без переліку/змісту заявок. Права підтримки не надаються самою
+        адміністративною роллю.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id025
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id025
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id025
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id025
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id025
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id025
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id025
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id025
+      parameters:
+      - name: queueId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueueUpdate'
+  /admin/categories:
+    get:
+      operationId: API-ADMIN-CATEGORIES-LIST
+      summary: Адміністративний список categories
+      description: 'Доступ: Адміністратор. Без змісту заявок; пароль і хеш ніколи не повертаються.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id026
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryList'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id026
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id026
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id026
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id026
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id026
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 300
+    post:
+      operationId: API-ADMIN-CATEGORIES-CREATE
+      summary: Створити categories
+      description: 'Доступ: Адміністратор. Конфігураційна зміна та admin_events атомарні. Конфлікт унікальності — 409.'
+      x-requirements:
+      - US-10
+      responses:
+        '201':
+          description: Успіх
+          headers: &id027
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id027
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id027
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id027
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id027
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id027
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id027
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id027
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryCreate'
+  /admin/categories/{categoryId}:
+    put:
+      operationId: API-ADMIN-CATEGORIES-UPDATE
+      summary: Оновити categories
+      description: 'Доступ: Адміністратор. expectedVersion; заміна дозволених полів. Зняття ролі specialist/деактивація користувача
+        з незакритими призначеннями — 409 ACTIVE_ASSIGNMENTS без переліку/змісту заявок. Права підтримки не надаються самою
+        адміністративною роллю.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id028
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id028
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id028
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id028
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id028
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id028
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id028
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id028
+      parameters:
+      - name: categoryId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryUpdate'
+  /admin/queues/{queueId}/memberships:
+    get:
+      operationId: API-ADMIN-MEMBERS-LIST
+      summary: Склад черги
+      description: 'Доступ: Адміністратор.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id029
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipList'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id029
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id029
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id029
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id029
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id029
+      parameters:
+      - name: queueId
+        in: path
+        required: true
+        schema: *id002
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 300
+    post:
+      operationId: API-ADMIN-MEMBERS-CREATE
+      summary: Додати учасника черги
+      description: 'Доступ: Адміністратор. Потрібні active user, active queue та відповідна active глобальна роль. Неактивний
+        наявний рядок поновлюється через update; дублі — 409.'
+      x-requirements:
+      - US-10
+      responses:
+        '201':
+          description: Успіх
+          headers: &id030
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id030
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id030
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id030
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id030
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id030
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id030
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id030
+      parameters:
+      - name: queueId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipCreate'
+  /admin/queues/{queueId}/memberships/{membershipId}:
+    put:
+      operationId: API-ADMIN-MEMBERS-UPDATE
+      summary: Змінити активність членства
+      description: 'Доступ: Адміністратор. Належність membershipId до queueId перевіряється; active=false для виконавця з
+        незакритими заявками цієї черги — 409 ACTIVE_ASSIGNMENTS. Активізація повторно перевіряє user/queue/роль.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id031
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id031
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id031
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id031
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id031
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id031
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id031
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id031
+      parameters:
+      - name: queueId
+        in: path
+        required: true
+        schema: *id002
+      - name: membershipId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipUpdate'
+  /admin/policies:
+    get:
+      operationId: API-ADMIN-POLICIES-LIST
+      summary: Редакції політик строків
+      description: 'Доступ: Адміністратор.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id032
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyList'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id032
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id032
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id032
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id032
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id032
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 300
+    post:
+      operationId: API-ADMIN-POLICIES-CREATE
+      summary: Створити нову редакцію політики
+      description: 'Доступ: Адміністратор. expectedRevision=0 для першої редакції; інакше номер чинної. Блокування category/priority,
+        перевірка revision, деактивація старої і запис нової атомарні. Знімки наявних заявок не переписуються.'
+      x-requirements:
+      - US-10
+      responses:
+        '201':
+          description: Успіх
+          headers: &id033
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id033
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id033
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id033
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id033
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id033
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id033
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id033
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyCreate'
+  /admin/policies/{policyId}/deactivate:
+    post:
+      operationId: API-ADMIN-POLICIES-DEACTIVATE
+      summary: Деактивувати чинну політику
+      description: 'Доступ: Адміністратор. Перевірка expectedRevision та чинності; після деактивації нові заявки відповідного
+        пріоритету не створюються до появи іншої чинної політики. Знімки наявних заявок зберігаються.'
+      x-requirements:
+      - US-10
+      responses:
+        '200':
+          description: Успіх
+          headers: &id034
+            X-Correlation-ID:
+              schema: *id002
+              description: Ідентифікатор для зіставлення з діагностичним журналом.
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '400':
+          description: Некоректний JSON або параметр
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id034
+        '401':
+          description: Сеанс відсутній, прострочений, відкликаний або користувач неактивний
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id034
+        '403':
+          description: Дія заборонена або не пройдено CSRF/Origin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id034
+        '404':
+          description: Ресурс відсутній або недоступний; без розкриття існування чужого ресурсу
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id034
+        '409':
+          description: Конфлікт версії, стану, повтору або адміністративного обмеження
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id034
+        '422':
+          description: Семантична помилка поля або бізнес-умов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id034
+        '503':
+          description: Сховище тимчасово недоступне; зміни не підтверджені
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers: *id034
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        schema: *id002
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 256
+        description: Токен активного сеансу; також перевіряються Origin і same-origin.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyDeactivate'
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: support_session
+      description: Випадковий непрозорий токен; Secure, HttpOnly, SameSite=Strict. Сервер перевіряє active на кожному запиті.
+  schemas:
+    Error:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 80
+        message:
+          type: string
+          minLength: 1
+          maxLength: 500
+        correlationId: *id002
+        fieldErrors:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              field:
+                type: string
+                minLength: 1
+                maxLength: 100
+              message:
+                type: string
+                minLength: 1
+                maxLength: 300
+            required:
+            - field
+            - message
+      required:
+      - code
+      - message
+      - correlationId
+      - fieldErrors
+    Ticket:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        number: *id035
+        requesterId: *id002
+        categoryId: *id002
+        queueId: *id002
+        assigneeId: &id039
+          anyOf:
+          - *id002
+          - type: 'null'
+        previousTicketId:
+          anyOf:
+          - *id002
+          - type: 'null'
+        title: &id038
+          type: string
+          minLength: 1
+          maxLength: 150
+        description:
+          type: string
+          minLength: 1
+          maxLength: 4000
+        priority: &id040
+          type: string
+          enum:
+          - low
+          - normal
+          - high
+          - critical
+        state: *id036
+        responseTargetMs: *id035
+        resolutionTargetMs: *id035
+        createdAt: &id037
+          type: string
+          format: date-time
+          pattern: Z$
+        updatedAt: *id037
+        firstAssignedAt:
+          anyOf:
+          - *id037
+          - type: 'null'
+        firstResponseAt:
+          anyOf:
+          - *id037
+          - type: 'null'
+        solutionCommentId:
+          anyOf:
+          - *id002
+          - type: 'null'
+        version: *id035
+      required:
+      - id
+      - number
+      - requesterId
+      - categoryId
+      - queueId
+      - assigneeId
+      - previousTicketId
+      - title
+      - description
+      - priority
+      - state
+      - responseTargetMs
+      - resolutionTargetMs
+      - createdAt
+      - updatedAt
+      - firstAssignedAt
+      - firstResponseAt
+      - solutionCommentId
+      - version
+    TicketSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        number: *id035
+        title: *id038
+        categoryId: *id002
+        queueId: *id002
+        assigneeId: *id039
+        priority: *id040
+        state: *id036
+        createdAt: *id037
+        version: *id035
+      required:
+      - id
+      - number
+      - title
+      - categoryId
+      - queueId
+      - assigneeId
+      - priority
+      - state
+      - createdAt
+      - version
+    TicketPage:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TicketSummary'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 300
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    CreateTicketRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 150
+        description:
+          type: string
+          minLength: 1
+          maxLength: 4000
+        categoryId: *id002
+        previousTicketId: *id002
+      required:
+      - title
+      - description
+      - categoryId
+    AssignmentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expectedVersion: *id035
+        assigneeId: *id002
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 2000
+      required:
+      - expectedVersion
+      - assigneeId
+    PriorityRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expectedVersion: *id035
+        priority: *id040
+      required:
+      - expectedVersion
+      - priority
+    StateRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expectedVersion: *id035
+        toState:
+          type: string
+          enum:
+          - in_progress
+          - waiting_requester
+          - resolved
+          - closed
+        text:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        solutionCommentId: *id002
+      required:
+      - expectedVersion
+      - toState
+    CommentRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expectedVersion: *id035
+        body:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        visibility:
+          type: string
+          enum:
+          - public
+          - internal
+      required:
+      - expectedVersion
+      - body
+      - visibility
+    Comment:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        ticketId: *id002
+        authorId: *id002
+        createdAt: *id037
+        body:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        visibility:
+          type: string
+          enum:
+          - public
+          - internal
+        kind:
+          type: string
+          enum:
+          - comment
+          - clarification
+          - solution
+          - rejection
+          - resume_reason
+      required:
+      - id
+      - ticketId
+      - authorId
+      - createdAt
+      - body
+      - visibility
+      - kind
+    CommentPage:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 300
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    HistoryItem:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        occurredAt: *id037
+        actorId:
+          anyOf:
+          - *id002
+          - type: 'null'
+        eventType:
+          type: string
+          enum:
+          - created
+          - assigned
+          - reassigned
+          - priority_changed
+          - state_changed
+          - comment_added
+          - response_breached
+          - resolution_breached
+        changes:
+          type: object
+          description: Серверна проєкція дозволених змін без тіл повідомлень і секретів.
+      required:
+      - id
+      - occurredAt
+      - actorId
+      - eventType
+      - changes
+    HistoryPage:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryItem'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 300
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    Timing:
+      type: object
+      additionalProperties: false
+      properties:
+        asOf: *id037
+        responseElapsedMs:
+          type: integer
+          minimum: 0
+        resolutionElapsedMs:
+          type: integer
+          minimum: 0
+        responseTargetMs: *id035
+        resolutionTargetMs: *id035
+        responseBreached: &id041
+          type: boolean
+        resolutionBreached: *id041
+      required:
+      - asOf
+      - responseElapsedMs
+      - resolutionElapsedMs
+      - responseTargetMs
+      - resolutionTargetMs
+      - responseBreached
+      - resolutionBreached
+    User:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        login:
+          type: string
+          minLength: 1
+          maxLength: 100
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 150
+        active: *id041
+        roles:
+          type: array
+          items: &id042
+            type: string
+            enum:
+            - requester
+            - specialist
+            - coordinator
+            - administrator
+        version: *id035
+      required:
+      - id
+      - login
+      - displayName
+      - active
+      - roles
+      - version
+    Queue:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        name:
+          type: string
+          minLength: 1
+          maxLength: 150
+        active: *id041
+        version: *id035
+      required:
+      - id
+      - name
+      - active
+      - version
+    Category:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        name:
+          type: string
+          minLength: 1
+          maxLength: 150
+        queueId: *id002
+        active: *id041
+        version: *id035
+      required:
+      - id
+      - name
+      - queueId
+      - active
+      - version
+    Policy:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        categoryId: *id002
+        priority: *id040
+        revision: *id035
+        responseTargetMs: *id035
+        resolutionTargetMs: *id035
+        active: *id041
+      required:
+      - id
+      - categoryId
+      - priority
+      - revision
+      - responseTargetMs
+      - resolutionTargetMs
+      - active
+    Membership:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        queueId: *id002
+        userId: *id002
+        memberRole:
+          type: string
+          enum:
+          - specialist
+          - coordinator
+        active: *id041
+        version: *id035
+      required:
+      - id
+      - queueId
+      - userId
+      - memberRole
+      - active
+      - version
+    Notification:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        ticketId: *id002
+        eventType:
+          type: string
+          minLength: 1
+          maxLength: 80
+        createdAt: *id037
+        readAt:
+          anyOf:
+          - *id037
+          - type: 'null'
+      required:
+      - id
+      - ticketId
+      - eventType
+      - createdAt
+      - readAt
+    NotificationPage:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 300
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    Summary:
+      type: object
+      additionalProperties: false
+      properties:
+        asOf: *id037
+        byState:
+          type: object
+          additionalProperties: false
+          properties:
+            new:
+              type: integer
+              minimum: 0
+            assigned:
+              type: integer
+              minimum: 0
+            in_progress:
+              type: integer
+              minimum: 0
+            waiting_requester:
+              type: integer
+              minimum: 0
+            resolved:
+              type: integer
+              minimum: 0
+            closed:
+              type: integer
+              minimum: 0
+          required:
+          - new
+          - assigned
+          - in_progress
+          - waiting_requester
+          - resolved
+          - closed
+        everBreachedCount:
+          type: integer
+          minimum: 0
+      required:
+      - asOf
+      - byState
+      - everBreachedCount
+    Session:
+      type: object
+      additionalProperties: false
+      properties:
+        userId: *id002
+        roles:
+          type: array
+          items: *id042
+        csrfToken:
+          type: string
+          minLength: 1
+          maxLength: 256
+        expiresAt: *id037
+      required:
+      - userId
+      - roles
+      - csrfToken
+      - expiresAt
+    LoginRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        login:
+          type: string
+          minLength: 1
+          maxLength: 100
+        password:
+          type: string
+          minLength: 1
+          maxLength: 64
+          writeOnly: true
+      required:
+      - login
+      - password
+    UserCreate:
+      type: object
+      additionalProperties: false
+      properties:
+        login:
+          type: string
+          minLength: 1
+          maxLength: 100
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 150
+        initialPassword:
+          type: string
+          minLength: 1
+          maxLength: 64
+          writeOnly: true
+        roles:
+          type: array
+          items: *id042
+          uniqueItems: true
+          minItems: 1
+      required:
+      - login
+      - displayName
+      - initialPassword
+      - roles
+    UserUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        expectedVersion: *id035
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 150
+        active: *id041
+        roles:
+          type: array
+          items: *id042
+          uniqueItems: true
+          minItems: 1
+      required:
+      - expectedVersion
+      - displayName
+      - active
+      - roles
+    QueueCreate:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 150
+      required:
+      - name
+    QueueUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        expectedVersion: *id035
+        name:
+          type: string
+          minLength: 1
+          maxLength: 150
+        active: *id041
+      required:
+      - expectedVersion
+      - name
+      - active
+    CategoryCreate:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 150
+        queueId: *id002
+      required:
+      - name
+      - queueId
+    CategoryUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        expectedVersion: *id035
+        name:
+          type: string
+          minLength: 1
+          maxLength: 150
+        queueId: *id002
+        active: *id041
+      required:
+      - expectedVersion
+      - name
+      - queueId
+      - active
+    MembershipCreate:
+      type: object
+      additionalProperties: false
+      properties:
+        userId: *id002
+        memberRole:
+          type: string
+          enum:
+          - specialist
+          - coordinator
+      required:
+      - userId
+      - memberRole
+    MembershipUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        expectedVersion: *id035
+        active: *id041
+      required:
+      - expectedVersion
+      - active
+    PolicyCreate:
+      type: object
+      additionalProperties: false
+      properties:
+        categoryId: *id002
+        priority: *id040
+        responseTargetMs: *id035
+        resolutionTargetMs: *id035
+        expectedRevision:
+          type: integer
+          minimum: 0
+      required:
+      - categoryId
+      - priority
+      - responseTargetMs
+      - resolutionTargetMs
+      - expectedRevision
+    PolicyDeactivate:
+      type: object
+      additionalProperties: false
+      properties:
+        expectedRevision: *id035
+      required:
+      - expectedRevision
+    UserList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 300
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    QueueList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Queue'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 300
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    CategoryList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 300
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    MembershipList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Membership'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 300
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PolicyList:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 300
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    CategoryChoice:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        name:
+          type: string
+          minLength: 1
+          maxLength: 150
+      required:
+      - id
+      - name
+    CategoryChoices:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryChoice'
+      required:
+      - items
+    AssigneeChoice:
+      type: object
+      additionalProperties: false
+      properties:
+        id: *id002
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 150
+      required:
+      - id
+      - displayName
+    AssigneeChoices:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssigneeChoice'
+      required:
+      - items
+    ReadNotification:
+      type: object
+      additionalProperties: false
+      properties:
+        read:
+          type: boolean
+          const: true
+      required:
+      - read

@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-08",
+  "issue": "Fixed Compose name reused existing volume with newly generated credentials.",
+  "evidence": {
+    "oldVolume": "coursework-support_database",
+    "oldVolumeCreated": "2026-11-06",
+    "oldDatabaseTickets": 40,
+    "postgresError": "password authentication failed for user coursework_owner",
+    "oldAndNewPasswordsDiffer": true
+  },
+  "fix": "New .env files receive persistent random COMPOSE_PROJECT_NAME. Existing .env kept; deployed package explicitly assigned an isolated project.",
+  "checks": {
+    "freshProjectsAndVolumesDiffer": true,
+    "repeatedInitPreservesEnv": true,
+    "migrationExitCode": 0,
+    "appHealthy": true,
+    "healthHttpsStatus": 200,
+    "requesterLoginStatus": 200,
+    "caAndHostnameVerified": true,
+    "oldVolumePreserved": true
+  },
+  "limits": "Startup and login verified; full pytest, browser flows and load tests not repeated. Historical evidence from 06.11.2026 unchanged."
+}
